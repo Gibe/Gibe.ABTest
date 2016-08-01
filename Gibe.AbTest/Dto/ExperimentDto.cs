@@ -1,8 +1,10 @@
 ﻿using System;
+using NPoco;
 
 namespace Gibe.AbTest.Dto
 {
-	public class Experiment
+	[TableName("ABExperiment")]
+	public class ExperimentDto
 	{
 		public int Id { get; set; }
 		public string Key { get; set; }

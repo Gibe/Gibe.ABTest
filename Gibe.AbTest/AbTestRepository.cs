@@ -13,51 +13,51 @@ namespace Gibe.AbTest
 			_databaseProvider = databaseProvider;
 		}
 
-		public Experiment GetExperiment(int id)
+		public ExperimentDto GetExperiment(int id)
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Single<Experiment>("WHERE Id = @0", id);
+				return db.Single<ExperimentDto>("WHERE Id = @0", id);
 			}
 		}
 
-		public Experiment GetExperiment(string key)
+		public ExperimentDto GetExperiment(string key)
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Single<Experiment>("WHERE Key = @0", key);
+				return db.Single<ExperimentDto>("WHERE Key = @0", key);
 			}
 		}
 
-		public IEnumerable<Experiment> GetExperiments()
+		public IEnumerable<ExperimentDto> GetExperiments()
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Query<Experiment>("FROM Experiment");
+				return db.Query<ExperimentDto>("FROM Experiment");
 			}
 		}
 
-		public Variation GetVariation(int id)
+		public VariationDto GetVariation(int id)
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Single<Variation>("WHERE Id = @0", id);
+				return db.Single<VariationDto>("WHERE Id = @0", id);
 			}
 		}
 
-		public Variation GetVariation(string key)
+		public VariationDto GetVariation(string key)
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Single<Variation>("WHERE Key = @0", key);
+				return db.Single<VariationDto>("WHERE Key = @0", key);
 			}
 		}
 
-		public IEnumerable<Variation> GetVariations(int experimentId)
+		public IEnumerable<VariationDto> GetVariations(int experimentId)
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Query<Variation>("WHERE ExperimentId = @0", experimentId);
+				return db.Query<VariationDto>("WHERE ExperimentId = @0", experimentId);
 			}
 		}
 	}
