@@ -16,7 +16,7 @@ namespace Gibe.AbTest.Tests
 
 			var variation = abTest.AssignVariation();
 
-			Assert.AreEqual(fakeAbTestingService.GetExperiments().First().Variations.First().Key, variation.Key);
+			Assert.AreEqual(fakeAbTestingService.GetExperiments().First().Variations.First().Id, variation.Id);
 		}
 
 		[Test]
@@ -28,7 +28,7 @@ namespace Gibe.AbTest.Tests
 
 			var variation = abTest.AssignVariation();
 
-			Assert.AreEqual(fakeAbTestingService.GetExperiments().ElementAt(1).Variations.ElementAt(1).Key, variation.Key);
+			Assert.AreEqual(fakeAbTestingService.GetExperiments().ElementAt(1).Variations.ElementAt(1).Id, variation.Id);
 		}
 	}
 }

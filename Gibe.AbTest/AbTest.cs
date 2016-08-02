@@ -22,9 +22,9 @@ namespace Gibe.AbTest
 			return RandomlySelectOption(selectedExperiment.Variations);
 		}
 
-		public Variation GetAssignedVariation(string key)
+		public Variation GetAssignedVariation(string experimentKey, int variationNumber)
 		{
-			return _abTestingService.GetVariation(key);
+			return _abTestingService.GetVariation(experimentKey, variationNumber);
 		}
 
 		private T RandomlySelectOption<T>(IEnumerable<T> options) where T : IWeighted

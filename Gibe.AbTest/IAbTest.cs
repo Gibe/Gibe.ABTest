@@ -9,19 +9,19 @@ namespace Gibe.AbTest
 	public interface IAbTest
 	{
 		Variation AssignVariation();
-		Variation GetAssignedVariation(string key);
+		Variation GetAssignedVariation(string experimentKey, int variationNumber);
 	}
 
 	public class FakeAbTest : IAbTest
 	{
 		public Variation AssignVariation()
 		{
-			return new Variation(1,"TEST",1,true,"{Test:'test'");
+			return new Variation(1, 0, 1,true,"{Test:'test'}", "ABC1");
 		}
 
-		public Variation GetAssignedVariation(string key)
+		public Variation GetAssignedVariation(string experimentKey, int variationNumber)
 		{
-			return new Variation(1, key, 1, true, "{Test:'test'");
+			return new Variation(1, variationNumber, 1, true, "{Test:'test'}", experimentKey);
 		}
 	}
 }

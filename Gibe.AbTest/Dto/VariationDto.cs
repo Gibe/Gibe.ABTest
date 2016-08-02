@@ -6,7 +6,8 @@ namespace Gibe.AbTest.Dto
 	public class VariationDto
 	{
 		public int Id { get; set; }
-		public string Key { get; set; }
+		public string ExperimentKey { get; set; }
+		public int VariationNumber { get; set; }
 		public int Weight { get; set; }
 		public bool Enabled { get; set; }
 		public string Definition { get; set; }

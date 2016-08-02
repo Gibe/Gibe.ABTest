@@ -16,18 +16,19 @@ namespace Gibe.AbTest
 		public IEnumerable<Experiment> GetExperiments()
 		{
 			return _abTestRepository.GetExperiments()
-				.Select(x => new Experiment(x, GetVariations(x.Id)));
+				.Select(x => new Experiment(x, GetVariations(x.Key)));
 		}
 
-		public IEnumerable<Variation> GetVariations(int experimentId)
+		public IEnumerable<Variation> GetVariations(string experimentKey)
 		{
-			return _abTestRepository.GetVariations(experimentId)
+			return _abTestRepository.GetVariations(experimentKey)
 				.Select(v => new Variation(v));
 		}
 
-		public Variation GetVariation(string key)
+		public Variation GetVariation(string experimentKey, int variationNumber)
 		{
-			var dto = _abTestRepository.GetVariation(key);
+			var dto = _abTestRepository.GetVariations(experimentKey)
+				.First(v => v.VariationNumber == variationNumber);
 			return new Variation(dto);
 		}
 	}
