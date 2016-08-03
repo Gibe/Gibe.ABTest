@@ -33,8 +33,8 @@ namespace Gibe.AbTest
 		{
 			return new List<Experiment>
 			{
-				new Experiment("AB1", 1, true, DateTime.Now, null, GetVariations("AB1")),
-				new Experiment("AB2", 1, true, DateTime.Now, null, GetVariations("AB2"))
+				new Experiment("A1234", "AB1", "Desc 1", 1, true, DateTime.Now, null, GetVariations("AB1")),
+				new Experiment("A2345", "AB2", "Desc 2", 1, true, DateTime.Now, null, GetVariations("AB2"))
 			};
 		}
 	}

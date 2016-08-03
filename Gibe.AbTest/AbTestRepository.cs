@@ -13,11 +13,11 @@ namespace Gibe.AbTest
 			_databaseProvider = databaseProvider;
 		}
 
-		public ExperimentDto GetExperiment(string key)
+		public ExperimentDto GetExperiment(string id)
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Single<ExperimentDto>("WHERE Key = @0", key);
+				return db.Single<ExperimentDto>("WHERE Id = @0", id);
 			}
 		}
 
@@ -37,11 +37,11 @@ namespace Gibe.AbTest
 			}
 		}
 
-		public IEnumerable<VariationDto> GetVariations(string experimentKey)
+		public IEnumerable<VariationDto> GetVariations(string experimentId)
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Query<VariationDto>("WHERE ExperimentKey = @0", experimentKey);
+				return db.Query<VariationDto>("WHERE ExperimentId = @0", experimentId);
 			}
 		}
 	}

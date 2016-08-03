@@ -7,10 +7,10 @@ namespace Gibe.AbTest
 {
 	public interface IAbTestRepository
 	{
-		ExperimentDto GetExperiment(string key);
+		ExperimentDto GetExperiment(string id);
 		IEnumerable<ExperimentDto> GetExperiments();
 		VariationDto GetVariation(int id);
-		IEnumerable<VariationDto> GetVariations(string experimentKey);
+		IEnumerable<VariationDto> GetVariations(string experimentId);
 
 		
 	}
@@ -18,14 +18,15 @@ namespace Gibe.AbTest
 	public class FakeAbTestRepository : IAbTestRepository
 	{
 		
-		public ExperimentDto GetExperiment(string key)
+		public ExperimentDto GetExperiment(string id)
 		{
 			return new ExperimentDto
 			{
+				Id = id,
 				Enabled = true,
 				StartDate = DateTime.Now,
 				EndDate = null,
-				Key = key,
+				Key = "ABC123",
 				Weight = 1
 			};
 		}
@@ -48,12 +49,12 @@ namespace Gibe.AbTest
 				VariationNumber = 0,
 				Definition = "{Test:'test'}",
 				Enabled = true,
-				ExperimentKey = "ABC",
+				ExperimentId = "ABC",
 				Weight = 1
 			};
 		}
 		
-		public IEnumerable<VariationDto> GetVariations(string experimentKey)
+		public IEnumerable<VariationDto> GetVariations(string experimentId)
 		{
 			return new List<VariationDto>
 			{

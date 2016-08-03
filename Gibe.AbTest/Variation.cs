@@ -12,18 +12,18 @@ namespace Gibe.AbTest
 	{
 		public int Id { get; set; }
 		public int VariationNumber { get; set; }
-		public string ExperimentKey { get; set; }
+		public string ExperimentId { get; set; }
 		public int Weight { get; set; }
 		public bool Enabled { get; set; }
 		public string Defintion { get; set; }
 
-		public Variation(VariationDto dto) : this(dto.Id, dto.VariationNumber, dto.Weight, dto.Enabled, dto.Definition, dto.ExperimentKey) { }
+		public Variation(VariationDto dto) : this(dto.Id, dto.VariationNumber, dto.Weight, dto.Enabled, dto.Definition, dto.ExperimentId) { }
 
-		public Variation(int id, int variationNumber, int weight, bool enabled, string definition, string experimentKey)
+		public Variation(int id, int variationNumber, int weight, bool enabled, string definition, string experimentId)
 		{
 			Id = id;
 			VariationNumber = variationNumber;
-			ExperimentKey = experimentKey;
+			ExperimentId = experimentId;
 			Weight = weight;
 			Enabled = enabled;
 			Defintion = definition;
@@ -36,7 +36,7 @@ namespace Gibe.AbTest
 
 		public override string ToString()
 		{
-			return $"Id : {Id} {ExperimentKey}-{VariationNumber}";
+			return $"Id : {Id} {ExperimentId}-{VariationNumber}";
 		}
 	}
 }

@@ -30,5 +30,22 @@ namespace Gibe.AbTest.Tests
 
 			Assert.AreEqual(fakeAbTestingService.GetExperiments().ElementAt(1).Variations.ElementAt(1).Id, variation.Id);
 		}
+
+		[Test]
+		public void GetAssignedVariation_returns_variation_from_AbTestingService()
+		{
+			const string experimentId = "ABC";
+			const int variationNo = 1;
+
+			var fakeAbTestingService = new FakeAbTestingService();
+
+			var abTest = new AbTest(fakeAbTestingService, new FakeRandomNumber(new int[] {}));
+
+			var variation = abTest.GetAssignedVariation(experimentId, variationNo);
+
+			Assert.AreEqual(experimentId, variation.ExperimentId);
+			Assert.AreEqual(variationNo, variation.VariationNumber);
+
+		}
 	}
 }
