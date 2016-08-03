@@ -8,7 +8,7 @@
 GO
 
 CREATE TABLE AbVariation (
-	[Id] INT NOT NULL PRIMARY KEY,
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 	[ExperimentKey] VARCHAR(50) NOT NULL,
 	[VariationNumber] INT NOT NULL,
 	[Enabled] BIT NOT NULL DEFAULT(1),

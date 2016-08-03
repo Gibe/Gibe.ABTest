@@ -9,7 +9,7 @@
     <description>Lightweight A/B testing framework</description>
 		<dependencies>
 			<dependency id="Gibe.NPoco" version="1.0.159" />
-			<dependency id="Newtonsoft.Json" version="9.0.1" />
+			<dependency id="Newtonsoft.Json" version="6.0.8" />
 		</dependencies>
 	</metadata>
 	<files>

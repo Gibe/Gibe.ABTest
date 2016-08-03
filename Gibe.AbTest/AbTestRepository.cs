@@ -25,7 +25,7 @@ namespace Gibe.AbTest
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Query<ExperimentDto>("FROM Experiment");
+				return db.Query<ExperimentDto>("FROM AbExperiment");
 			}
 		}
 

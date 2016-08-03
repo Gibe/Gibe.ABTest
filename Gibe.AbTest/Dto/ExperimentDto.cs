@@ -3,7 +3,8 @@ using NPoco;
 
 namespace Gibe.AbTest.Dto
 {
-	[TableName("ABExperiment")]
+	[TableName("AbExperiment")]
+	[PrimaryKey("Key", AutoIncrement = false)]
 	public class ExperimentDto
 	{
 		public string Key { get; set; }

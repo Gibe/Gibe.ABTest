@@ -3,6 +3,7 @@
 namespace Gibe.AbTest.Dto
 {
 	[TableName("ABVariation")]
+	[PrimaryKey("Id", AutoIncrement = true)]
 	public class VariationDto
 	{
 		public int Id { get; set; }
