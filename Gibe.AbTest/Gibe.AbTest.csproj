@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gibe.Caching, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gibe.Caching.1.0.159\lib\Gibe.Caching.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Gibe.NPoco, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Gibe.NPoco.1.0.159\lib\Gibe.NPoco.dll</HintPath>
       <Private>True</Private>
@@ -56,6 +60,7 @@
     <Compile Include="AbTest.cs" />
     <Compile Include="AbTestingService.cs" />
     <Compile Include="AbTestRepository.cs" />
+    <Compile Include="CachingAbTestingService.cs" />
     <Compile Include="Dto\ExperimentDto.cs" />
     <Compile Include="Experiment.cs" />
     <Compile Include="IAbTest.cs" />
