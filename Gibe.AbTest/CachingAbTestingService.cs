@@ -19,14 +19,14 @@ namespace Gibe.AbTest
 			_cache = cache;
 		}
 
-		public Variation GetVariation(string experimentKey, int variationNumber)
+		public Variation GetVariation(string experimentId, int variationNumber)
 		{
-			return GetVariations(experimentKey).First(v => v.VariationNumber == variationNumber);
+			return GetVariations(experimentId).First(v => v.VariationNumber == variationNumber);
 		}
 
-		public IEnumerable<Variation> GetVariations(string experimentKey)
+		public IEnumerable<Variation> GetVariations(string experimentId)
 		{
-			return GetExperiments().First(x => x.Key == experimentKey).Variations;
+			return GetExperiments().First(x => x.Id == experimentId).Variations;
 		}
 
 		public IEnumerable<Experiment> GetExperiments()

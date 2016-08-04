@@ -8,24 +8,24 @@ namespace Gibe.AbTest
 {
 	public interface IAbTestingService
 	{
-		Variation GetVariation(string experimentKey, int variationNumber);
-		IEnumerable<Variation> GetVariations(string experimentKey);
+		Variation GetVariation(string experimentId, int variationNumber);
+		IEnumerable<Variation> GetVariations(string experimentId);
 		IEnumerable<Experiment> GetExperiments();
 	}
 
 	public class FakeAbTestingService : IAbTestingService
 	{
-		public Variation GetVariation(string experimentKey, int variationNumber)
+		public Variation GetVariation(string experimentId, int variationNumber)
 		{
-			return new Variation(1, variationNumber, 1, true, "{Test:'test'}", experimentKey);
+			return new Variation(1, variationNumber, 1, true, "{Test:'test'}", experimentId);
 		}
 
-		public IEnumerable<Variation> GetVariations(string experimentKey)
+		public IEnumerable<Variation> GetVariations(string experimentId)
 		{
 			return new List<Variation>
 			{
-				GetVariation(experimentKey, 0),
-				GetVariation(experimentKey, 1)
+				GetVariation(experimentId, 0),
+				GetVariation(experimentId, 1)
 			};
 		}
 
