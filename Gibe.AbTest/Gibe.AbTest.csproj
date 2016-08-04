@@ -60,6 +60,7 @@
     <Compile Include="AbTest.cs" />
     <Compile Include="AbTestingService.cs" />
     <Compile Include="AbTestRepository.cs" />
+    <Compile Include="Attributes\NotCachedAttribute.cs" />
     <Compile Include="CachingAbTestingService.cs" />
     <Compile Include="Dto\ExperimentDto.cs" />
     <Compile Include="Experiment.cs" />

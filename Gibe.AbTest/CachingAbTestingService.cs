@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Gibe.AbTest.Attributes;
 using Gibe.Caching.Interfaces;
 
 namespace Gibe.AbTest
@@ -12,7 +13,7 @@ namespace Gibe.AbTest
 
 		private const string CacheKey = "GibeAbCache";
 
-		public CachingAbTestingService(IAbTestingService abTestingService, ICache cache)
+		public CachingAbTestingService([NotCached]IAbTestingService abTestingService, ICache cache)
 		{
 			_abTestingService = abTestingService;
 			_cache = cache;
