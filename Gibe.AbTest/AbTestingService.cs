@@ -16,7 +16,7 @@ namespace Gibe.AbTest
 		public IEnumerable<Experiment> GetExperiments()
 		{
 			return _abTestRepository.GetExperiments()
-				.Select(x => new Experiment(x, GetVariations(x.Id)));
+				.Select(x => new Experiment(x, GetVariations(x.Id).ToArray()));
 		}
 
 		public IEnumerable<Variation> GetVariations(string experimentId)

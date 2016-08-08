@@ -15,9 +15,9 @@ namespace Gibe.AbTest
 		public int Weight { get; set; }
 		public IEnumerable<Variation> Variations { get; set; }
 
-		public Experiment(ExperimentDto dto, IEnumerable<Variation> variations) : this(dto.Id, dto.Key, dto.Description, dto.Weight, dto.Enabled, dto.StartDate, dto.EndDate, variations) { }
+		public Experiment(ExperimentDto dto, Variation[] variations) : this(dto.Id, dto.Key, dto.Description, dto.Weight, dto.Enabled, dto.StartDate, dto.EndDate, variations) { }
 
-		public Experiment(string id, string key, string description, int weight, bool enabled, DateTime startDate, DateTime? endDate, IEnumerable<Variation> variations)
+		public Experiment(string id, string key, string description, int weight, bool enabled, DateTime startDate, DateTime? endDate, Variation[] variations)
 		{
 			Id = id;
 			Key = key;
