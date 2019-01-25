@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Gibe.AbTest
@@ -9,7 +8,8 @@ namespace Gibe.AbTest
 		private readonly IAbTestingService _abTestingService;
 		private readonly IRandomNumber _randomNumber;
 
-		public AbTest(IAbTestingService abTestingService, IRandomNumber randomNumber)
+		public AbTest(IAbTestingService abTestingService,
+			IRandomNumber randomNumber)
 		{
 			_abTestingService = abTestingService;
 			_randomNumber = randomNumber;
@@ -20,6 +20,23 @@ namespace Gibe.AbTest
 			var experiments = _abTestingService.GetExperiments().Where(x => x.Enabled);
 			var selectedExperiment = RandomlySelectOption(experiments);
 			return RandomlySelectOption(selectedExperiment.Variations);
+		}
+
+		public Variation AssignVariation(string experiementKey)
+		{
+			var experiment = _abTestingService.GetExperiments()
+				.Where(x => x.Enabled)
+				.First(x => x.Key == experiementKey);
+			return RandomlySelectOption(experiment.Variations);
+		}
+
+		public IEnumerable<Variation> AssignVariations()
+		{
+			var experiments = _abTestingService.GetExperiments().Where(x => x.Enabled);
+			foreach (var experiment in experiments)
+			{
+				yield return RandomlySelectOption(experiment.Variations);
+			}
 		}
 
 		public Variation GetAssignedVariation(string experimentId, int variationNumber)
@@ -34,15 +51,13 @@ namespace Gibe.AbTest
 			var selectedNumber = _randomNumber.Number(totalWeights);
 
 			var currrentWeight = 0;
-			foreach (var t in opts)
+			foreach (var o in opts)
 			{
-				currrentWeight += t.Weight;
+				currrentWeight += o.Weight;
 				if (currrentWeight > selectedNumber)
-					return t;
+					return o;
 			}
 			return opts.Last();
 		}
-
-		
 	}
 }

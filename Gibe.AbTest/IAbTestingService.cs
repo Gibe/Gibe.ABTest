@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Gibe.AbTest
 {
@@ -15,6 +11,12 @@ namespace Gibe.AbTest
 
 	public class FakeAbTestingService : IAbTestingService
 	{
+		public IEnumerable<Experiment> Experiements;
+		public FakeAbTestingService(IEnumerable<Experiment> experiements)
+		{
+			Experiements = experiements;
+		}
+
 		public Variation GetVariation(string experimentId, int variationNumber)
 		{
 			return new Variation(1, variationNumber, 1, true, "{Test:'test'}", experimentId);
@@ -31,11 +33,7 @@ namespace Gibe.AbTest
 
 		public IEnumerable<Experiment> GetExperiments()
 		{
-			return new List<Experiment>
-			{
-				new Experiment("A1234", "AB1", "Desc 1", 1, true, DateTime.Now, null, GetVariations("AB1").ToArray()),
-				new Experiment("A2345", "AB2", "Desc 2", 1, true, DateTime.Now, null, GetVariations("AB2").ToArray())
-			};
+			return Experiements;
 		}
 	}
 }
