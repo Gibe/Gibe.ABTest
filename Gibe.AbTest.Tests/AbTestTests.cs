@@ -39,7 +39,7 @@ namespace Gibe.AbTest.Tests
 		{
 			var abTest = new AbTest(_abTestingService, new FakeRandomNumber(new [] { 0, 0 }));
 
-			var variation = abTest.AssignVariation();
+			var variation = abTest.AssignRandomVariation();
 
 			Assert.AreEqual(_abTestingService.GetExperiments().First().Variations.First().Id, variation.Id);
 		}
@@ -49,7 +49,7 @@ namespace Gibe.AbTest.Tests
 		{
 			var abTest = new AbTest(_abTestingService, new FakeRandomNumber(new[] { 1, 1 }));
 
-			var variation = abTest.AssignVariation();
+			var variation = abTest.AssignRandomVariation();
 
 			Assert.AreEqual(_abTestingService.GetExperiments().ElementAt(1).Variations.ElementAt(1).Id, variation.Id);
 		}
@@ -59,7 +59,7 @@ namespace Gibe.AbTest.Tests
 		{
 			var abTest = new AbTest(_abTestingService, new FakeRandomNumber(new[] { 2, 2 }));
 
-			var variation = abTest.AssignVariation();
+			var variation = abTest.AssignRandomVariation();
 
 			Assert.AreEqual(_abTestingService.GetExperiments().ElementAt(1).Variations.ElementAt(1).Id, variation.Id);
 		}
@@ -93,7 +93,7 @@ namespace Gibe.AbTest.Tests
 
 			var abTest = new AbTest(_abTestingService, new FakeRandomNumber(new int[] {}));
 
-			var variation = abTest.GetAssignedVariation(experimentId, variationNo);
+			var variation = abTest.AssignedVariation(experimentId, variationNo);
 
 			Assert.AreEqual(experimentId, variation.ExperimentId);
 			Assert.AreEqual(variationNo, variation.VariationNumber);

@@ -15,7 +15,7 @@ namespace Gibe.AbTest
 			_randomNumber = randomNumber;
 		}
 
-		public Variation AssignVariation()
+		public Variation AssignRandomVariation()
 		{
 			var experiments = _abTestingService.GetExperiments().Where(x => x.Enabled);
 			var selectedExperiment = RandomlySelectOption(experiments);
@@ -39,10 +39,11 @@ namespace Gibe.AbTest
 			}
 		}
 
-		public Variation GetAssignedVariation(string experimentId, int variationNumber)
+		public Variation AssignedVariation(string experimentId, int variationNumber)
 		{
 			return _abTestingService.GetVariation(experimentId, variationNumber);
 		}
+
 
 		private T RandomlySelectOption<T>(IEnumerable<T> options) where T : IWeighted
 		{

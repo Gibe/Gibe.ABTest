@@ -1,45 +1,44 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace Gibe.AbTest
 {
 	public interface IAbTest
 	{
-		Variation AssignVariation();
+		Variation AssignRandomVariation();
 		Variation AssignVariation(string experiementKey);
 		IEnumerable<Variation> AssignVariations();
-		Variation GetAssignedVariation(string experimentId, int variationNumber);
+		Variation AssignedVariation(string experimentId, int variationNumber);
 	}
 
 	public class FakeAbTest : IAbTest
 	{
-		public Variation AssignVariation()
+		private readonly IEnumerable<Variation> _variations;
+
+		public FakeAbTest(IEnumerable<Variation> variations)
 		{
-			return new Variation(1, 0, 1,true,"{Test:'test'}", "ABC1");
+			_variations = variations;
+		}
+
+		public Variation AssignRandomVariation()
+		{
+			return _variations.First();
 		}
 
 		public Variation AssignVariation(string experiementKey)
 		{
-			return new Variation(1, 0, 1,true,"{Test:'test'}", experiementKey);
+			return _variations.First(v => v.ExperimentId == experiementKey);
 		}
 
 		public IEnumerable<Variation> AssignVariations()
 		{
-			return new List<Variation>
-			{
-				new Variation(1, 0, 1,true,"{Test:'test1'}", "ABC1"),
-				new Variation(2, 1, 1,true,"{Test:'test2'}", "DEF2"),
-				new Variation(3, 0, 1,true,"{Test:'test3'}", "GHI3")
-			};
+			return _variations.GroupBy(v => v.ExperimentId).Select(group => group.First());
 		}
 
-		public Variation GetAssignedVariation(string experimentId, int variationNumber)
+		public Variation AssignedVariation(string experimentId, int variationNumber)
 		{
-			return new Variation(1, variationNumber, 1, true, "{Test:'test'}", experimentId);
+			return _variations.First(v => v.ExperimentId == experimentId && v.VariationNumber == variationNumber);
 		}
 	}
 }
