@@ -22,11 +22,11 @@ namespace Gibe.AbTest
 			return RandomlySelectOption(selectedExperiment.Variations);
 		}
 
-		public Variation AssignVariation(string experiementKey)
+		public Variation AssignVariation(string experimentKey)
 		{
 			var experiment = _abTestingService.GetExperiments()
 				.Where(x => x.Enabled)
-				.First(x => x.Key == experiementKey);
+				.First(x => x.Key == experimentKey);
 			return RandomlySelectOption(experiment.Variations);
 		}
 
@@ -51,11 +51,11 @@ namespace Gibe.AbTest
 			var totalWeights = opts.Sum(o => o.Weight);
 			var selectedNumber = _randomNumber.Number(totalWeights);
 
-			var currrentWeight = 0;
+			var currentWeight = 0;
 			foreach (var o in opts)
 			{
-				currrentWeight += o.Weight;
-				if (currrentWeight > selectedNumber)
+				currentWeight += o.Weight;
+				if (currentWeight > selectedNumber)
 					return o;
 			}
 			return opts.Last();

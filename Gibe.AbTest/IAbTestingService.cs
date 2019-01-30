@@ -11,10 +11,10 @@ namespace Gibe.AbTest
 
 	public class FakeAbTestingService : IAbTestingService
 	{
-		public IEnumerable<Experiment> Experiements;
-		public FakeAbTestingService(IEnumerable<Experiment> experiements)
+		public IEnumerable<Experiment> Experiments;
+		public FakeAbTestingService(IEnumerable<Experiment> experiments)
 		{
-			Experiements = experiements;
+			Experiments = experiments;
 		}
 
 		public Variation GetVariation(string experimentId, int variationNumber)
@@ -33,7 +33,7 @@ namespace Gibe.AbTest
 
 		public IEnumerable<Experiment> GetExperiments()
 		{
-			return Experiements;
+			return Experiments;
 		}
 	}
 }
