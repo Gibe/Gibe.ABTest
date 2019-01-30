@@ -17,7 +17,7 @@ namespace Gibe.AbTest
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Single<ExperimentDto>("WHERE Id = @0", id);
+				return db.SingleOrDefault<ExperimentDto>("WHERE Id = @0", id);
 			}
 		}
 
@@ -25,23 +25,15 @@ namespace Gibe.AbTest
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Query<ExperimentDto>("FROM AbExperiment");
+				return db.Fetch<ExperimentDto>("FROM AbExperiment");
 			}
 		}
-
-		public VariationDto GetVariation(int id)
-		{
-			using (var db = _databaseProvider.GetDatabase())
-			{
-				return db.Single<VariationDto>("WHERE Id = @0", id);
-			}
-		}
-
+		
 		public IEnumerable<VariationDto> GetVariations(string experimentId)
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Query<VariationDto>("WHERE ExperimentId = @0", experimentId);
+				return db.Fetch<VariationDto>("WHERE ExperimentId = @0", experimentId);
 			}
 		}
 	}
