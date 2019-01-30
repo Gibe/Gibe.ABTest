@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace Gibe.AbTest
@@ -13,6 +15,11 @@ namespace Gibe.AbTest
 		{
 			_abTestingService = abTestingService;
 			_randomNumber = randomNumber;
+		}
+
+		public IEnumerable<Experiment> AllExperiments()
+		{
+			return _abTestingService.GetExperiments().Where(x => x.Enabled);
 		}
 
 		public Variation AssignRandomVariation()
@@ -30,16 +37,16 @@ namespace Gibe.AbTest
 			return RandomlySelectOption(experiment.Variations);
 		}
 
-		public IEnumerable<Variation> AssignVariations()
+		public IEnumerable<Variation> AllCurrentVariations()
 		{
-			var experiments = _abTestingService.GetExperiments().Where(x => x.Enabled);
+			var experiments = _abTestingService.GetExperiments().Where(x => x.Enabled && DateTime.Now > x.StartDate && DateTime.Now < x.EndDate);
 			foreach (var experiment in experiments)
 			{
 				yield return RandomlySelectOption(experiment.Variations);
 			}
 		}
 
-		public Variation AssignedVariation(string experimentId, int variationNumber)
+		public Variation Variation(string experimentId, int variationNumber)
 		{
 			return _abTestingService.GetVariation(experimentId, variationNumber);
 		}

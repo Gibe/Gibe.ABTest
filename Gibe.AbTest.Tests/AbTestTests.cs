@@ -15,18 +15,18 @@ namespace Gibe.AbTest.Tests
 		{
 			_abTestingService = new FakeAbTestingService(new List<Experiment>
 			{
-				new Experiment("Ex1", "Exp1", "Experiement 1", 1, true, DateTime.Now, null,
+				new Experiment("Ex1", "Exp1", "Experiment 1", 1, true, DateTime.Now, null,
 					new []{
 						new Variation(1, 0, 1, true, "{Exp1:'Variant 1'}", "Exp1"),
 						new Variation(2, 1, 1, true, "{Exp1:'Variant 2'}", "Exp1")
 
 					}),
-				new Experiment("Ex2", "Exp2", "Experiement 2", 1, true, DateTime.Now, null,
+				new Experiment("Ex2", "Exp2", "Experiment 2", 1, true, DateTime.Now, null,
 					new []{
 						new Variation(3, 0, 1, true, "{Exp2:'Variant 1'}", "Exp2"),
 						new Variation(4, 1, 1, true, "{Exp2:'Variant 2'}", "Exp2")
 					}),
-				new Experiment("Ex3", "Exp3", "Experiement 3", 1, false, DateTime.Now, null,
+				new Experiment("Ex3", "Exp3", "Experiment 3", 1, false, DateTime.Now, null,
 					new []{
 						new Variation(5, 0, 1, true, "{Exp3:'Variant 1'}", "Exp3"),
 						new Variation(6, 1, 1, true, "{Exp2:'Variant 2'}", "Exp3")
@@ -79,7 +79,7 @@ namespace Gibe.AbTest.Tests
 		{
 			var abTest = new AbTest(_abTestingService, new FakeRandomNumber(new[] { 0, 0 }));
 
-			var variations = abTest.AssignVariations().ToList();
+			var variations = abTest.AllCurrentVariations().ToList();
 
 			Assert.That(_abTestingService.GetExperiments().Where(e => e.Enabled).Select(e => e.Variations.First().Id), Is.EqualTo(variations.Select(v => v.Id)));
 			Assert.That(variations.Count, Is.EqualTo(2));
@@ -93,7 +93,7 @@ namespace Gibe.AbTest.Tests
 
 			var abTest = new AbTest(_abTestingService, new FakeRandomNumber(new int[] {}));
 
-			var variation = abTest.AssignedVariation(experimentId, variationNo);
+			var variation = abTest.Variation(experimentId, variationNo);
 
 			Assert.AreEqual(experimentId, variation.ExperimentId);
 			Assert.AreEqual(variationNo, variation.VariationNumber);

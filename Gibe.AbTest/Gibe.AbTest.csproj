@@ -34,6 +34,9 @@
       <HintPath>..\packages\Gibe.Caching.1.0.159\lib\Gibe.Caching.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Gibe.Cookies, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gibe.Cookies.1.0.356\lib\Gibe.Cookies.dll</HintPath>
+    </Reference>
     <Reference Include="Gibe.NPoco, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Gibe.NPoco.1.0.159\lib\Gibe.NPoco.dll</HintPath>
       <Private>True</Private>
@@ -62,11 +65,16 @@
     <Compile Include="AbTestRepository.cs" />
     <Compile Include="Attributes\NotCachedAttribute.cs" />
     <Compile Include="CachingAbTestingService.cs" />
+    <Compile Include="DefaultExperimentService.cs" />
     <Compile Include="Dto\ExperimentDto.cs" />
     <Compile Include="Experiment.cs" />
+    <Compile Include="ExperimentCookieValueFactory.cs" />
+    <Compile Include="ExperimentCookieValue.cs" />
     <Compile Include="IAbTest.cs" />
     <Compile Include="IAbTestingService.cs" />
     <Compile Include="IAbTestRepository.cs" />
+    <Compile Include="IExperimentCookieValueFactory.cs" />
+    <Compile Include="IExperimentService.cs" />
     <Compile Include="IRandomNumber.cs" />
     <Compile Include="IWeighted.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
