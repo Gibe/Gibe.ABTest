@@ -15,23 +15,24 @@ namespace Gibe.AbTest
 		public string ExperimentId { get; set; }
 		public int Weight { get; set; }
 		public bool Enabled { get; set; }
-		public string Defintion { get; set; }
+		public string Definition { get; set; }
+		public bool DesktopOnly { get; set; }
 
-		public Variation(VariationDto dto) : this(dto.Id, dto.VariationNumber, dto.Weight, dto.Enabled, dto.Definition, dto.ExperimentId) { }
+		public Variation(VariationDto dto) : this(dto.Id, dto.VariationNumber, dto.Weight, dto.Enabled, dto.Definition, dto.ExperimentId, dto.DesktopOnly) { }
 
-		public Variation(int id, int variationNumber, int weight, bool enabled, string definition, string experimentId)
+		public Variation(int id, int variationNumber, int weight, bool enabled, string definition, string experimentId, bool desktopOnly)
 		{
 			Id = id;
 			VariationNumber = variationNumber;
 			ExperimentId = experimentId;
 			Weight = weight;
 			Enabled = enabled;
-			Defintion = definition;
+			Definition = definition;
 		}
 		
 		public T GetDefinition<T>()
 		{
-			return JsonConvert.DeserializeObject<T>(Defintion);
+			return JsonConvert.DeserializeObject<T>(Definition);
 		}
 
 		public override string ToString()

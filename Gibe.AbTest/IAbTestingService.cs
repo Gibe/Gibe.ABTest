@@ -17,7 +17,7 @@ namespace Gibe.AbTest
 	{
 		public Variation GetVariation(string experimentId, int variationNumber)
 		{
-			return new Variation(1, variationNumber, 1, true, "{Test:'test'}", experimentId);
+			return new Variation(1, variationNumber, 1, true, "{Test:'test'}", experimentId, false);
 		}
 
 		public IEnumerable<Variation> GetVariations(string experimentId)
