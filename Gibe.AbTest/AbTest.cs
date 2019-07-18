@@ -15,16 +15,26 @@ namespace Gibe.AbTest
 			_randomNumber = randomNumber;
 		}
 
-		public Variation AssignVariation()
+		public Variation AssignVariation(string userAgent)
 		{
 			var experiments = _abTestingService.GetExperiments().Where(x => x.Enabled);
 			var selectedExperiment = RandomlySelectOption(experiments);
-			return RandomlySelectOption(selectedExperiment.Variations);
+			return RandomlySelectOption(FilterVariations(selectedExperiment.Variations, userAgent));
 		}
 
 		public Variation GetAssignedVariation(string experimentId, int variationNumber)
 		{
 			return _abTestingService.GetVariation(experimentId, variationNumber);
+		}
+
+		private IEnumerable<Variation> FilterVariations(IEnumerable<Variation> variations, string userAgent)
+		{
+			var filtered = variations.Where(v => v.DesktopOnly && !userAgent.Contains("Mobi") || !v.DesktopOnly);
+			if (!filtered.Any())
+			{
+				return variations.Take(1);
+			}
+			return filtered;
 		}
 
 		private T RandomlySelectOption<T>(IEnumerable<T> options) where T : IWeighted
