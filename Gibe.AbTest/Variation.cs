@@ -28,6 +28,7 @@ namespace Gibe.AbTest
 			Weight = weight;
 			Enabled = enabled;
 			Definition = definition;
+			DesktopOnly = desktopOnly;
 		}
 		
 		public T GetDefinition<T>()
