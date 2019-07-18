@@ -20,12 +20,19 @@ namespace Gibe.AbTest
 			return new Variation(1, variationNumber, 1, true, "{Test:'test'}", experimentId, false);
 		}
 
+		private Variation GetDesktopOnlyVariation(string experimentId, int variationNumber, bool desktopOnly = false)
+		{
+			var variation = GetVariation(experimentId, variationNumber);
+			variation.DesktopOnly = desktopOnly;
+			return variation;
+		}
+
 		public IEnumerable<Variation> GetVariations(string experimentId)
 		{
 			return new List<Variation>
 			{
-				GetVariation(experimentId, 0),
-				GetVariation(experimentId, 1)
+				GetDesktopOnlyVariation(experimentId, 0, false),
+				GetDesktopOnlyVariation(experimentId, 1, true)
 			};
 		}
 
