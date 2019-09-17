@@ -17,7 +17,7 @@ namespace Gibe.AbTest.Tests
 		[Test]
 		public void GetExperiments_Returns_All_Experiments()
 		{
-			var experiments = Repo().GetExperiments().ToArray();
+			var experiments = Repo().GetEnabledExperiments().ToArray();
 
 			Assert.That(experiments.Length, Is.EqualTo(2));
 		}

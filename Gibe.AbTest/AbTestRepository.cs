@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Gibe.AbTest.Dto;
 using Gibe.NPoco;
 
@@ -22,7 +21,7 @@ namespace Gibe.AbTest
 			}
 		}
 
-		public IEnumerable<ExperimentDto> GetExperiments()
+		public IEnumerable<ExperimentDto> GetEnabledExperiments()
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{

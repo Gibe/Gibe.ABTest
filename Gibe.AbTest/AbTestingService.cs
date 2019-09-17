@@ -12,9 +12,9 @@ namespace Gibe.AbTest
 			_abTestRepository = abTestRepository;
 		}
 
-		public IEnumerable<Experiment> GetExperiments()
+		public IEnumerable<Experiment> GetEnabledExperiments()
 		{
-			return _abTestRepository.GetExperiments()
+			return _abTestRepository.GetEnabledExperiments()
 				.Select(x => new Experiment(x, GetVariations(x.Id).ToArray()));
 		}
 

@@ -7,7 +7,7 @@ namespace Gibe.AbTest
 	public interface IAbTestRepository
 	{
 		ExperimentDto GetExperiment(string id);
-		IEnumerable<ExperimentDto> GetExperiments();
+		IEnumerable<ExperimentDto> GetEnabledExperiments();
 		IEnumerable<VariationDto> GetVariations(string experimentId);
 	}
 
@@ -27,7 +27,7 @@ namespace Gibe.AbTest
 			};
 		}
 
-		public IEnumerable<ExperimentDto> GetExperiments()
+		public IEnumerable<ExperimentDto> GetEnabledExperiments()
 		{
 			return new List<ExperimentDto>
 			{

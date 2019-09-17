@@ -19,27 +19,26 @@ namespace Gibe.AbTest
 
 		public IEnumerable<Experiment> AllExperiments()
 		{
-			return _abTestingService.GetExperiments().Where(x => x.Enabled);
+			return _abTestingService.GetEnabledExperiments();
 		}
 
 		public Variation AssignRandomVariation()
 		{
-			var experiments = _abTestingService.GetExperiments();
+			var experiments = _abTestingService.GetEnabledExperiments();
 			var selectedExperiment = RandomlySelectOption(experiments);
 			return RandomlySelectOption(selectedExperiment.Variations);
 		}
 
 		public Variation AssignVariation(string experimentKey)
 		{
-			var experiment = _abTestingService.GetExperiments()
-				.Where(x => x.Enabled)
+			var experiment = _abTestingService.GetEnabledExperiments()
 				.First(x => x.Key == experimentKey);
 			return RandomlySelectOption(experiment.Variations);
 		}
 
 		public IEnumerable<Variation> AllCurrentVariations()
 		{
-			var experiments = _abTestingService.GetExperiments().Where(x => x.Enabled && DateTime.Now > x.StartDate && DateTime.Now < x.EndDate);
+			var experiments = _abTestingService.GetEnabledExperiments().Where(x => DateTime.Now > x.StartDate && DateTime.Now < x.EndDate);
 			foreach (var experiment in experiments)
 			{
 				yield return RandomlySelectOption(experiment.Variations);

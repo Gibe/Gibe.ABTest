@@ -41,7 +41,7 @@ namespace Gibe.AbTest.Tests
 
 			var variation = abTest.AssignRandomVariation();
 
-			Assert.AreEqual(_abTestingService.GetExperiments().First().Variations.First().Id, variation.Id);
+			Assert.AreEqual(_abTestingService.GetEnabledExperiments().First().Variations.First().Id, variation.Id);
 		}
 
 		[Test]
@@ -51,7 +51,7 @@ namespace Gibe.AbTest.Tests
 
 			var variation = abTest.AssignRandomVariation();
 
-			Assert.AreEqual(_abTestingService.GetExperiments().ElementAt(1).Variations.ElementAt(1).Id, variation.Id);
+			Assert.AreEqual(_abTestingService.GetEnabledExperiments().ElementAt(1).Variations.ElementAt(1).Id, variation.Id);
 		}
 
 		[Test]
@@ -61,7 +61,7 @@ namespace Gibe.AbTest.Tests
 
 			var variation = abTest.AssignRandomVariation();
 
-			Assert.AreEqual(_abTestingService.GetExperiments().ElementAt(1).Variations.ElementAt(1).Id, variation.Id);
+			Assert.AreEqual(_abTestingService.GetEnabledExperiments().ElementAt(1).Variations.ElementAt(1).Id, variation.Id);
 		}
 
 		[Test]
@@ -71,7 +71,7 @@ namespace Gibe.AbTest.Tests
 
 			var variation = abTest.AssignVariation("Exp1");
 
-			Assert.That(_abTestingService.GetExperiments().First(x => x.Key == "Exp1").Variations.First().Id, Is.EqualTo(variation.Id));
+			Assert.That(_abTestingService.GetEnabledExperiments().First(x => x.Key == "Exp1").Variations.First().Id, Is.EqualTo(variation.Id));
 		}
 
 		[Test]
@@ -81,7 +81,7 @@ namespace Gibe.AbTest.Tests
 
 			var variations = abTest.AllCurrentVariations().ToList();
 
-			Assert.That(_abTestingService.GetExperiments().Where(e => e.Enabled).Select(e => e.Variations.First().Id), Is.EqualTo(variations.Select(v => v.Id)));
+			Assert.That(_abTestingService.GetEnabledExperiments().Where(e => e.Enabled).Select(e => e.Variations.First().Id), Is.EqualTo(variations.Select(v => v.Id)));
 			Assert.That(variations.Count, Is.EqualTo(2));
 		}
 
