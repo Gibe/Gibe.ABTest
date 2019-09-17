@@ -22,17 +22,10 @@ namespace Gibe.AbTest
 			return _abTestingService.GetEnabledExperiments();
 		}
 
-		public Variation AssignRandomVariation()
+		public Variation AssignRandomVariation(string userAgent)
 		{
 			var experiments = _abTestingService.GetEnabledExperiments();
-			var selectedExperiment = RandomlySelectOption(experiments);
-			return RandomlySelectOption(selectedExperiment.Variations);
-		}
-
-		public Variation AssignVariation(string userAgent)
-		{
-			var experiments = _abTestingService.GetEnabledExperiments();
-			var selectedExperiment = RandomlySelectOption(experiments);
+			var selectedExperiment = RandomlySelectOption(FilterExperiments(experiments, userAgent));
 			return RandomlySelectOption(FilterVariations(selectedExperiment.Variations, userAgent));
 		}
 
@@ -45,7 +38,7 @@ namespace Gibe.AbTest
 
 		public IEnumerable<Variation> AllCurrentVariations()
 		{
-			var experiments = _abTestingService.GetEnabledExperiments().Where(x => DateTime.Now > x.StartDate && DateTime.Now < x.EndDate);
+			var experiments = _abTestingService.GetEnabledExperiments().Where(x => (DateTime.Now >= x.StartDate || x.StartDate == null ) && (DateTime.Now < x.EndDate || x.EndDate == null));
 			foreach (var experiment in experiments)
 			{
 				yield return RandomlySelectOption(experiment.Variations);
@@ -55,6 +48,16 @@ namespace Gibe.AbTest
 		public Variation Variation(string experimentId, int variationNumber)
 		{
 			return _abTestingService.GetVariation(experimentId, variationNumber);
+		}
+
+		private IEnumerable<Experiment> FilterExperiments(IEnumerable<Experiment> experments, string userAgent)
+		{
+			var filtered = experments.Where(e => e.Variations.Any(v => v.DesktopOnly) && !userAgent.Contains("Mobi") || !e.Variations.All(v => v.DesktopOnly));
+			if (!filtered.Any())
+			{
+				return experments.Take(1); //TODO: We should not return anything if there are no correct matches, this requires a refactor to use IEnumerables everywhere
+			}
+			return filtered;
 		}
 
 		private IEnumerable<Variation> FilterVariations(IEnumerable<Variation> variations, string userAgent)

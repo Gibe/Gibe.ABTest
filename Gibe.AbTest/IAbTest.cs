@@ -6,8 +6,7 @@ namespace Gibe.AbTest
 	public interface IAbTest
 	{
 		IEnumerable<Experiment> AllExperiments();
-		Variation AssignRandomVariation();
-		Variation AssignVariation(string userAgent);
+		Variation AssignRandomVariation(string userAgent);
 		Variation AssignVariationByExperimentKey(string experimentKey);
 		IEnumerable<Variation> AllCurrentVariations();
 		Variation Variation(string experimentId, int variationNumber);
@@ -27,12 +26,7 @@ namespace Gibe.AbTest
 			return new List<Experiment>();//TODO: chance constructor to take experiments instead of variations
 		}
 
-		public Variation AssignRandomVariation()
-		{
-			return _variations.First();
-		}
-
-		public Variation AssignVariation(string userAgent)
+		public Variation AssignRandomVariation(string userAgent)
 		{
 			return _variations.First();
 		}

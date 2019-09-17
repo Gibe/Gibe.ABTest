@@ -11,15 +11,15 @@ namespace Gibe.AbTest.Tests
 	[TestFixture]
 	public class AbTestRepositoryTests
 	{
-		private const string ValidExperimentId = "vapBwUPvTEuGcEVEKThGCA";
+		private const string ValidExperimentId = "sq0S2zdKQhWEmBc6sQ4sfQ";
 		private const string InvalidExperimentId = "NotRealId";
 		
 		[Test]
-		public void GetExperiments_Returns_All_Experiments()
+		public void GetEnabledExperiments_Returns_All_Enabled_Experiments()
 		{
 			var experiments = Repo().GetEnabledExperiments().ToArray();
 
-			Assert.That(experiments.Length, Is.EqualTo(2));
+			Assert.That(experiments.Length, Is.EqualTo(1));
 		}
 
 		[Test]

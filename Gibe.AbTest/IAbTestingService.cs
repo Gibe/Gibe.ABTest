@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Gibe.AbTest
 {
@@ -40,7 +41,7 @@ namespace Gibe.AbTest
 
 		public IEnumerable<Experiment> GetEnabledExperiments()
 		{
-			return Experiments;
+			return Experiments.Where(e => e.Enabled);
 		}
 	}
 }
