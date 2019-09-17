@@ -15,7 +15,8 @@ CREATE TABLE AbVariation (
 	[VariationNumber] INT NOT NULL,
 	[Enabled] BIT NOT NULL DEFAULT(1),
 	[Weight] INT NOT NULL,
-	[Definition] NVARCHAR(MAX)
+	[Definition] NVARCHAR(MAX),
+	[DesktopOnly] BIT NOT NULL DEFAULT(0)
 )
 GO
 

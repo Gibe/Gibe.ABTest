@@ -20,12 +20,12 @@ namespace Gibe.AbTest.Tests
 			_cookieService = new Mock<ICookieService>();
 			_abTest = new FakeAbTest(
 				new List<Variation>{
-					new Variation(1, 0, 1,true,"{Test:'test1'}", "vapBwUPvTEuGcEVEKThGCA"),
-					new Variation(2, 1, 1,true,"{Test:'test1'}", "vapBwUPvTEuGcEVEKThGCA"),
-					new Variation(3, 0, 1,true,"{Test:'test2'}", "vapBwUPvTEuGcEVEKThGCB"),
-					new Variation(4, 1, 1,true,"{Test:'test2'}", "vapBwUPvTEuGcEVEKThGCB"),
-					new Variation(5, 0, 1,true,"{Test:'test3'}", "vapBwUPvTEuGcEVEKThGCC"),
-					new Variation(6, 1, 1,true,"{Test:'test3'}", "vapBwUPvTEuGcEVEKThGCC")
+					new Variation(1, 0, 1,true,"{Test:'test1'}", "vapBwUPvTEuGcEVEKThGCA", false),
+					new Variation(2, 1, 1,true,"{Test:'test1'}", "vapBwUPvTEuGcEVEKThGCA", false),
+					new Variation(3, 0, 1,true,"{Test:'test2'}", "vapBwUPvTEuGcEVEKThGCB", false),
+					new Variation(4, 1, 1,true,"{Test:'test2'}", "vapBwUPvTEuGcEVEKThGCB", false),
+					new Variation(5, 0, 1,true,"{Test:'test3'}", "vapBwUPvTEuGcEVEKThGCC", false),
+					new Variation(6, 1, 1,true,"{Test:'test3'}", "vapBwUPvTEuGcEVEKThGCC", false)
 				});
 		}
 
@@ -136,7 +136,7 @@ namespace Gibe.AbTest.Tests
 		private static void AssertVariations(IEnumerable<Variation> results, string variationsString)
 		{
 			var variations = variationsString.Split('-')
-				.Select(e => new Variation(0, int.Parse(e.Split('~')[1]), 1, true, "", e.Split('~')[0]));
+				.Select(e => new Variation(0, int.Parse(e.Split('~')[1]), 1, true, "", e.Split('~')[0], false));
 
 			foreach (var variation in variations)
 			{

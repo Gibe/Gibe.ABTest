@@ -29,7 +29,14 @@ namespace Gibe.AbTest
 			return RandomlySelectOption(selectedExperiment.Variations);
 		}
 
-		public Variation AssignVariation(string experimentKey)
+		public Variation AssignVariation(string userAgent)
+		{
+			var experiments = _abTestingService.GetEnabledExperiments();
+			var selectedExperiment = RandomlySelectOption(experiments);
+			return RandomlySelectOption(FilterVariations(selectedExperiment.Variations, userAgent));
+		}
+
+		public Variation AssignVariationByExperimentKey(string experimentKey)
 		{
 			var experiment = _abTestingService.GetEnabledExperiments()
 				.First(x => x.Key == experimentKey);
@@ -50,6 +57,15 @@ namespace Gibe.AbTest
 			return _abTestingService.GetVariation(experimentId, variationNumber);
 		}
 
+		private IEnumerable<Variation> FilterVariations(IEnumerable<Variation> variations, string userAgent)
+		{
+			var filtered = variations.Where(v => v.DesktopOnly && !userAgent.Contains("Mobi") || !v.DesktopOnly);
+			if (!filtered.Any())
+			{
+				return variations.Take(1);
+			}
+			return filtered;
+		}
 
 		private T RandomlySelectOption<T>(IEnumerable<T> options) where T : IWeighted
 		{

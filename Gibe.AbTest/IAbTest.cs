@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 
 namespace Gibe.AbTest
 {
@@ -8,7 +7,8 @@ namespace Gibe.AbTest
 	{
 		IEnumerable<Experiment> AllExperiments();
 		Variation AssignRandomVariation();
-		Variation AssignVariation(string experimentKey);
+		Variation AssignVariation(string userAgent);
+		Variation AssignVariationByExperimentKey(string experimentKey);
 		IEnumerable<Variation> AllCurrentVariations();
 		Variation Variation(string experimentId, int variationNumber);
 	}
@@ -32,7 +32,12 @@ namespace Gibe.AbTest
 			return _variations.First();
 		}
 
-		public Variation AssignVariation(string experimentKey)
+		public Variation AssignVariation(string userAgent)
+		{
+			return _variations.First();
+		}
+
+		public Variation AssignVariationByExperimentKey(string experimentKey)
 		{
 			return _variations.First(v => v.ExperimentId == experimentKey);
 		}

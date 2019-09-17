@@ -12,5 +12,6 @@ namespace Gibe.AbTest.Dto
 		public int Weight { get; set; }
 		public bool Enabled { get; set; }
 		public string Definition { get; set; }
+		public bool DesktopOnly { get; set; }
 	}
 }

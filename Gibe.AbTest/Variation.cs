@@ -11,10 +11,11 @@ namespace Gibe.AbTest
 		public int Weight { get; set; }
 		public bool Enabled { get; set; }
 		public string Definition { get; set; }
+		public bool DesktopOnly { get; set; }
 
-		public Variation(VariationDto dto) : this(dto.Id, dto.VariationNumber, dto.Weight, dto.Enabled, dto.Definition, dto.ExperimentId) { }
+		public Variation(VariationDto dto) : this(dto.Id, dto.VariationNumber, dto.Weight, dto.Enabled, dto.Definition, dto.ExperimentId, dto.DesktopOnly) { }
 
-		public Variation(int id, int variationNumber, int weight, bool enabled, string definition, string experimentId)
+		public Variation(int id, int variationNumber, int weight, bool enabled, string definition, string experimentId, bool desktopOnly)
 		{
 			Id = id;
 			VariationNumber = variationNumber;
@@ -22,6 +23,7 @@ namespace Gibe.AbTest
 			Weight = weight;
 			Enabled = enabled;
 			Definition = definition;
+			DesktopOnly = desktopOnly;
 		}
 
 		public T GetDefinition<T>()
