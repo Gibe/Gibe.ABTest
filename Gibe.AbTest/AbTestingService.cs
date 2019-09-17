@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Gibe.AbTest.Dto;
+using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace Gibe.AbTest
 {
@@ -41,8 +41,13 @@ namespace Gibe.AbTest
 
 		public Variation GetVariation(string experimentId, int variationNumber)
 		{
-			var dto = _abTestRepository.GetVariations(experimentId)
-				.First(v => v.VariationNumber == variationNumber);
+			var dtos = _abTestRepository.GetVariations(experimentId);
+			VariationDto dto = null;
+
+			if (dtos.Any())
+			{ 
+				dto = dtos.First(v => v.VariationNumber == variationNumber);
+			}
 
 			if (dto != null)
 			{
