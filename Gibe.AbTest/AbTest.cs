@@ -19,7 +19,8 @@ namespace Gibe.AbTest
 		{
 			var experiments = _abTestingService.GetExperiments().Where(x => x.Enabled);
 			var selectedExperiment = RandomlySelectOption(experiments);
-			return RandomlySelectOption(FilterVariations(selectedExperiment.Variations, userAgent));
+			var selectedVariation = RandomlySelectOption(FilterVariations(selectedExperiment.Variations, userAgent));
+			return selectedVariation;
 		}
 
 		public Variation GetAssignedVariation(string experimentId, int variationNumber)
@@ -52,7 +53,5 @@ namespace Gibe.AbTest
 			}
 			return opts.Last();
 		}
-
-		
 	}
 }
