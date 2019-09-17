@@ -38,7 +38,7 @@ namespace Gibe.AbTest
 
 		public IEnumerable<Variation> AllCurrentVariations()
 		{
-			var experiments = _abTestingService.GetEnabledExperiments().Where(x => (DateTime.Now >= x.StartDate || x.StartDate == null ) && (DateTime.Now < x.EndDate || x.EndDate == null));
+			var experiments = _abTestingService.GetEnabledExperiments();
 			foreach (var experiment in experiments)
 			{
 				yield return RandomlySelectOption(experiment.Variations);
@@ -69,6 +69,7 @@ namespace Gibe.AbTest
 			}
 			return filtered;
 		}
+
 
 		private T RandomlySelectOption<T>(IEnumerable<T> options) where T : IWeighted
 		{

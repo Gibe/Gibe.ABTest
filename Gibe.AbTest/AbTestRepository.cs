@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Gibe.AbTest.Dto;
 using Gibe.NPoco;
 
@@ -25,7 +26,11 @@ namespace Gibe.AbTest
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Fetch<ExperimentDto>("FROM AbExperiment WHERE [Enabled] = 1");
+				var now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+				return db.Fetch<ExperimentDto>($"FROM AbExperiment " +
+					$"WHERE [Enabled] = 1 " +
+					$"AND '{now}' >= [StartDate] OR StartDate IS NULL " +
+					$"AND '{now}' < [EndDate] OR StartDate IS NULL ");
 			}
 		}
 		
