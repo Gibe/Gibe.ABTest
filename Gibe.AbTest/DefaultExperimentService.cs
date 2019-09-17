@@ -95,14 +95,14 @@ namespace Gibe.AbTest
 		{
 			var variationsCookie = _experimentCookieValueFactory.ExperimentCookieValue(variations);
 
-			_cookieService.Create(CookieKey, variationsCookie.RawValue, DateTime.UtcNow.AddDays(120));
+			_cookieService.Create(CookieKey, variationsCookie.RawValue, DateTime.Now.AddDays(120));
 		}
 
 		private IEnumerable<Variation> CookieVariations(string cookieValue)
 		{
 			if (string.IsNullOrEmpty(cookieValue))
 			{
-				return new List<Variation>();
+				return Enumerable.Empty<Variation>();
 			}
 
 			return _experimentCookieValueFactory.ExperimentCookieValue(cookieValue)

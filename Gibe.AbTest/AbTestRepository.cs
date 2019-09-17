@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Gibe.AbTest.Dto;
 using Gibe.NPoco;
 
@@ -25,7 +26,7 @@ namespace Gibe.AbTest
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Fetch<ExperimentDto>("FROM AbExperiment");
+				return db.Fetch<ExperimentDto>("FROM AbExperiment WHERE [Enabled] = 1");
 			}
 		}
 		
