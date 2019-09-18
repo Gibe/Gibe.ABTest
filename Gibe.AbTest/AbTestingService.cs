@@ -28,12 +28,11 @@ namespace Gibe.AbTest
 
 		public IEnumerable<Variation> GetVariations(string experimentId)
 		{
-			var variations = _abTestRepository.GetVariations(experimentId)
-				.Select(v => new Variation(v));
+			var variations = _abTestRepository.GetVariations(experimentId);
 
 			if (variations.Any())
 			{
-				return variations;
+				return variations.Select(v => new Variation(v));
 			}
 
 			return new[] { EmptyVariation() };
@@ -41,17 +40,12 @@ namespace Gibe.AbTest
 
 		public Variation GetVariation(string experimentId, int variationNumber)
 		{
-			var dtos = _abTestRepository.GetVariations(experimentId);
-			VariationDto dto = null;
+			var variation = _abTestRepository.GetVariations(experimentId)
+				.FirstOrDefault(v => v.VariationNumber == variationNumber);
 
-			if (dtos.Any())
-			{ 
-				dto = dtos.First(v => v.VariationNumber == variationNumber);
-			}
-
-			if (dto != null)
+			if (variation != null)
 			{
-				return new Variation(dto);
+				return new Variation(variation);
 			}
 
 			return EmptyVariation();
