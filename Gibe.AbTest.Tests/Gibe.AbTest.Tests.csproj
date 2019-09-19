@@ -59,6 +59,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="AbTestingServiceTests.cs" />
     <Compile Include="AbTestRepositoryTests.cs" />
     <Compile Include="AbTestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

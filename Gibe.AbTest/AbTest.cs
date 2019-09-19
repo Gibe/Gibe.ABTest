@@ -52,7 +52,5 @@ namespace Gibe.AbTest
 			}
 			return opts.Last();
 		}
-
-		
 	}
 }
