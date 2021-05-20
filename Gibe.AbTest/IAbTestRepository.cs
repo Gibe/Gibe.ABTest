@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Gibe.AbTest.Dto;
 
 namespace Gibe.AbTest
@@ -9,55 +11,39 @@ namespace Gibe.AbTest
 		ExperimentDto GetExperiment(string id);
 		IEnumerable<ExperimentDto> GetEnabledExperiments();
 		IEnumerable<VariationDto> GetVariations(string experimentId);
+
+
 	}
 
 	public class FakeAbTestRepository : IAbTestRepository
 	{
-		
+		private IEnumerable<ExperimentDto> _experiments;
+		private IEnumerable<VariationDto> _variations;
+
+		public FakeAbTestRepository(IEnumerable<ExperimentDto> experiments, IEnumerable<VariationDto> variations)
+		{
+			_experiments = experiments;
+			_variations = variations;
+		}
+
 		public ExperimentDto GetExperiment(string id)
 		{
-			return new ExperimentDto
-			{
-				Id = id,
-				Enabled = true,
-				StartDate = DateTime.Now,
-				EndDate = null,
-				Key = "ABC123",
-				Weight = 1
-			};
+			return _experiments.First();
 		}
 
 		public IEnumerable<ExperimentDto> GetEnabledExperiments()
 		{
-			return new List<ExperimentDto>
-			{
-				GetExperiment("ABC"),
-				GetExperiment("DEF"),
-				GetExperiment("GHI")
-			};
+			return _experiments;
 		}
 
 		private VariationDto GetVariation(int id)
 		{
-			return new VariationDto
-			{
-				Id = id,
-				VariationNumber = 0,
-				Definition = "{Test:'test'}",
-				Enabled = true,
-				ExperimentId = "ABC",
-				Weight = 1
-			};
+			return _variations.First();
 		}
-		
+
 		public IEnumerable<VariationDto> GetVariations(string experimentId)
 		{
-			return new List<VariationDto>
-			{
-				GetVariation(1),
-				GetVariation(2),
-				GetVariation(3)
-			};
+			return _variations;
 		}
 	}
 }

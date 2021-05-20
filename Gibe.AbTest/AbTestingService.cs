@@ -1,4 +1,5 @@
 ﻿using System;
+using Gibe.AbTest.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,21 +16,59 @@ namespace Gibe.AbTest
 
 		public IEnumerable<Experiment> GetEnabledExperiments()
 		{
-			return _abTestRepository.GetEnabledExperiments()
+			var experiments = _abTestRepository.GetEnabledExperiments()
 				.Select(x => new Experiment(x, GetVariations(x.Id).ToArray()));
+
+			if (experiments.Any())
+			{
+				return experiments;
+		}
+
+			return new[] { EmptyExperiment() };
 		}
 
 		public IEnumerable<Variation> GetVariations(string experimentId)
 		{
-			return _abTestRepository.GetVariations(experimentId)
-				.Select(v => new Variation(v));
+			var variations = _abTestRepository.GetVariations(experimentId);
+
+			if (variations.Any())
+			{
+				return variations.Select(v => new Variation(v));
+		}
+
+			return new[] { EmptyVariation() };
 		}
 
 		public Variation GetVariation(string experimentId, int variationNumber)
 		{
-			var dto = _abTestRepository.GetVariations(experimentId)
-				.First(v => v.VariationNumber == variationNumber);
-			return new Variation(dto);
+			var variation = _abTestRepository.GetVariations(experimentId)
+				.FirstOrDefault(v => v.VariationNumber == variationNumber);
+
+			if (variation != null)
+			{
+				return new Variation(variation);
+		}
+
+			return EmptyVariation();
+	}
+
+		private Experiment EmptyExperiment()
+		{
+			return new Experiment(new Dto.ExperimentDto
+			{
+				Id = "",
+				Key = "",
+				Description = "",
+				StartDate = new System.DateTime(2019, 01, 01),
+				EndDate = null,
+				Weight = 1,
+				Enabled = true
+			}, new[] { EmptyVariation() });
+		}
+
+		private Variation EmptyVariation()
+		{
+			return new Variation(0, 1, 1, true, "", "", false);
 		}
 	}
 }
