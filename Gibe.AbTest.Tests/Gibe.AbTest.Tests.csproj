@@ -35,9 +35,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gibe.Cookies, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gibe.Cookies.1.0.356\lib\Gibe.Cookies.dll</HintPath>
+    </Reference>
     <Reference Include="Gibe.NPoco, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Gibe.NPoco.1.0.159\lib\Gibe.NPoco.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Moq, Version=4.2.1502.911, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1502.0911\lib\net40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="NPoco, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NPoco.2.5.77\lib\net40\NPoco.dll</HintPath>
@@ -62,6 +68,7 @@
     <Compile Include="AbTestingServiceTests.cs" />
     <Compile Include="AbTestRepositoryTests.cs" />
     <Compile Include="AbTestTests.cs" />
+    <Compile Include="ExperimentServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

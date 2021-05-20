@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Gibe.AbTest.Dto;
 using Gibe.NPoco;
 
@@ -17,31 +18,27 @@ namespace Gibe.AbTest
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Single<ExperimentDto>("WHERE Id = @0", id);
+				return db.SingleOrDefault<ExperimentDto>("WHERE Id = @0", id);
 			}
 		}
 
-		public IEnumerable<ExperimentDto> GetExperiments()
+		public IEnumerable<ExperimentDto> GetEnabledExperiments()
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Query<ExperimentDto>("FROM AbExperiment");
+				var now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+				return db.Fetch<ExperimentDto>($"FROM AbExperiment " +
+					$"WHERE [Enabled] = 1 " +
+					$"AND '{now}' >= [StartDate] OR StartDate IS NULL " +
+					$"AND '{now}' < [EndDate] OR StartDate IS NULL ");
 			}
 		}
-
-		public VariationDto GetVariation(int id)
-		{
-			using (var db = _databaseProvider.GetDatabase())
-			{
-				return db.Single<VariationDto>("WHERE Id = @0", id);
-			}
-		}
-
+		
 		public IEnumerable<VariationDto> GetVariations(string experimentId)
 		{
 			using (var db = _databaseProvider.GetDatabase())
 			{
-				return db.Query<VariationDto>("WHERE ExperimentId = @0", experimentId);
+				return db.Fetch<VariationDto>("WHERE ExperimentId = @0", experimentId);
 			}
 		}
 	}

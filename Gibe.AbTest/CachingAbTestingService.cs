@@ -26,16 +26,16 @@ namespace Gibe.AbTest
 
 		public IEnumerable<Variation> GetVariations(string experimentId)
 		{
-			return GetExperiments().First(x => x.Id == experimentId).Variations;
+			return GetEnabledExperiments().First(x => x.Id == experimentId).Variations;
 		}
 
-		public IEnumerable<Experiment> GetExperiments()
+		public IEnumerable<Experiment> GetEnabledExperiments()
 		{
 			if (_cache.Exists(CacheKey))
 			{
 				return _cache.Get<Experiment[]>(CacheKey);
 			}
-			var experiments = _abTestingService.GetExperiments().ToArray();
+			var experiments = _abTestingService.GetEnabledExperiments().ToArray();
 			_cache.Add(CacheKey, experiments, TimeSpan.FromMinutes(15));
 			return experiments;
 		}

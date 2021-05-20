@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace Gibe.AbTest
@@ -9,22 +10,54 @@ namespace Gibe.AbTest
 		private readonly IAbTestingService _abTestingService;
 		private readonly IRandomNumber _randomNumber;
 
-		public AbTest(IAbTestingService abTestingService, IRandomNumber randomNumber)
+		public AbTest(IAbTestingService abTestingService,
+			IRandomNumber randomNumber)
 		{
 			_abTestingService = abTestingService;
 			_randomNumber = randomNumber;
 		}
 
-		public Variation AssignVariation(string userAgent)
+		public IEnumerable<Experiment> AllExperiments()
 		{
-			var experiments = _abTestingService.GetExperiments().Where(x => x.Enabled);
-			var selectedExperiment = RandomlySelectOption(experiments);
+			return _abTestingService.GetEnabledExperiments();
+		}
+
+		public Variation AssignRandomVariation(string userAgent)
+		{
+			var experiments = _abTestingService.GetEnabledExperiments();
+			var selectedExperiment = RandomlySelectOption(FilterExperiments(experiments, userAgent));
 			return RandomlySelectOption(FilterVariations(selectedExperiment.Variations, userAgent));
 		}
 
-		public Variation GetAssignedVariation(string experimentId, int variationNumber)
+		public Variation AssignVariationByExperimentKey(string experimentKey)
+		{
+			var experiment = _abTestingService.GetEnabledExperiments()
+				.First(x => x.Key == experimentKey);
+			return RandomlySelectOption(experiment.Variations);
+		}
+
+		public IEnumerable<Variation> AllCurrentVariations()
+		{
+			var experiments = _abTestingService.GetEnabledExperiments();
+			foreach (var experiment in experiments)
+			{
+				yield return RandomlySelectOption(experiment.Variations);
+			}
+		}
+
+		public Variation Variation(string experimentId, int variationNumber)
 		{
 			return _abTestingService.GetVariation(experimentId, variationNumber);
+		}
+
+		private IEnumerable<Experiment> FilterExperiments(IEnumerable<Experiment> experments, string userAgent)
+		{
+			var filtered = experments.Where(e => e.Variations.Any(v => v.DesktopOnly) && !userAgent.Contains("Mobi") || !e.Variations.All(v => v.DesktopOnly));
+			if (!filtered.Any())
+			{
+				return experments.Take(1); //TODO: We should not return anything if there are no correct matches, this requires a refactor to use IEnumerables everywhere
+			}
+			return filtered;
 		}
 
 		private IEnumerable<Variation> FilterVariations(IEnumerable<Variation> variations, string userAgent)
@@ -37,18 +70,19 @@ namespace Gibe.AbTest
 			return filtered;
 		}
 
+
 		private T RandomlySelectOption<T>(IEnumerable<T> options) where T : IWeighted
 		{
 			var opts = options.ToArray();
 			var totalWeights = opts.Sum(o => o.Weight);
 			var selectedNumber = _randomNumber.Number(totalWeights);
 
-			var currrentWeight = 0;
-			foreach (var t in opts)
+			var currentWeight = 0;
+			foreach (var o in opts)
 			{
-				currrentWeight += t.Weight;
-				if (currrentWeight > selectedNumber)
-					return t;
+				currentWeight += o.Weight;
+				if (currentWeight > selectedNumber)
+					return o;
 			}
 			return opts.Last();
 		}

@@ -1,4 +1,5 @@
-﻿using Gibe.AbTest.Dto;
+﻿using System;
+using Gibe.AbTest.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,15 +14,15 @@ namespace Gibe.AbTest
 			_abTestRepository = abTestRepository;
 		}
 
-		public IEnumerable<Experiment> GetExperiments()
+		public IEnumerable<Experiment> GetEnabledExperiments()
 		{
-			var experiments = _abTestRepository.GetExperiments()
+			var experiments = _abTestRepository.GetEnabledExperiments()
 				.Select(x => new Experiment(x, GetVariations(x.Id).ToArray()));
 
 			if (experiments.Any())
 			{
 				return experiments;
-			}
+		}
 
 			return new[] { EmptyExperiment() };
 		}
@@ -33,7 +34,7 @@ namespace Gibe.AbTest
 			if (variations.Any())
 			{
 				return variations.Select(v => new Variation(v));
-			}
+		}
 
 			return new[] { EmptyVariation() };
 		}
@@ -46,10 +47,10 @@ namespace Gibe.AbTest
 			if (variation != null)
 			{
 				return new Variation(variation);
-			}
+		}
 
 			return EmptyVariation();
-		}
+	}
 
 		private Experiment EmptyExperiment()
 		{

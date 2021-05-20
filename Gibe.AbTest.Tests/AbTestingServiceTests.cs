@@ -18,7 +18,7 @@ namespace Gibe.AbTest.Tests
 		{
 			var fakeAbTestingService = new FakeAbTestRepository(new List<ExperimentDto>(), new List<VariationDto>());
 
-			var experiments = Service(fakeAbTestingService).GetExperiments();
+			var experiments = Service(fakeAbTestingService).GetEnabledExperiments();
 
 			var expected = new Experiment(new ExperimentDto
 			{

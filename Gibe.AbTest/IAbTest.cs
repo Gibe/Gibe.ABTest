@@ -1,27 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gibe.AbTest
 {
 	public interface IAbTest
 	{
-		Variation AssignVariation(string userAgent);
-		Variation GetAssignedVariation(string experimentId, int variationNumber);
+		IEnumerable<Experiment> AllExperiments();
+		Variation AssignRandomVariation(string userAgent);
+		Variation AssignVariationByExperimentKey(string experimentKey);
+		IEnumerable<Variation> AllCurrentVariations();
+		Variation Variation(string experimentId, int variationNumber);
 	}
 
 	public class FakeAbTest : IAbTest
 	{
-		public Variation AssignVariation(string userAgent)
+		private readonly IEnumerable<Variation> _variations;
+
+		public FakeAbTest(IEnumerable<Variation> variations)
 		{
-			return new Variation(1, 0, 1,true,"{Test:'test'}", "ABC1", false);
+			_variations = variations;
 		}
 
-		public Variation GetAssignedVariation(string experimentId, int variationNumber)
+		public IEnumerable<Experiment> AllExperiments()
 		{
-			return new Variation(1, variationNumber, 1, true, "{Test:'test'}", experimentId, false);
+			return new List<Experiment>();//TODO: chance constructor to take experiments instead of variations
+		}
+
+		public Variation AssignRandomVariation(string userAgent)
+		{
+			return _variations.First();
+		}
+
+		public Variation AssignVariationByExperimentKey(string experimentKey)
+		{
+			return _variations.First(v => v.ExperimentId == experimentKey);
+		}
+
+		public IEnumerable<Variation> AllCurrentVariations()
+		{
+			return _variations.GroupBy(v => v.ExperimentId).Select(group => group.First());
+		}
+
+		public Variation Variation(string experimentId, int variationNumber)
+		{
+			return _variations.FirstOrDefault(v => v.ExperimentId == experimentId && v.VariationNumber == variationNumber);
 		}
 	}
 }

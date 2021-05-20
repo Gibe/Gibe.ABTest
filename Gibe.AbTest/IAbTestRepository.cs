@@ -9,8 +9,7 @@ namespace Gibe.AbTest
 	public interface IAbTestRepository
 	{
 		ExperimentDto GetExperiment(string id);
-		IEnumerable<ExperimentDto> GetExperiments();
-		VariationDto GetVariation(int id);
+		IEnumerable<ExperimentDto> GetEnabledExperiments();
 		IEnumerable<VariationDto> GetVariations(string experimentId);
 
 
@@ -32,12 +31,12 @@ namespace Gibe.AbTest
 			return _experiments.First();
 		}
 
-		public IEnumerable<ExperimentDto> GetExperiments()
+		public IEnumerable<ExperimentDto> GetEnabledExperiments()
 		{
 			return _experiments;
 		}
 
-		public VariationDto GetVariation(int id)
+		private VariationDto GetVariation(int id)
 		{
 			return _variations.First();
 		}
