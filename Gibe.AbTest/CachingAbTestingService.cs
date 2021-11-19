@@ -36,7 +36,7 @@ namespace Gibe.AbTest
 				return _cache.Get<Experiment[]>(CacheKey);
 			}
 			var experiments = _abTestingService.GetExperiments().ToArray();
-			_cache.Add(CacheKey, experiments, TimeSpan.FromMinutes(15));
+			_cache.Add(CacheKey, experiments, TimeSpan.FromMinutes(1));
 			return experiments;
 		}
 	}
