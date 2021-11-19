@@ -17,7 +17,7 @@ namespace Gibe.AbTest
 
 		public Variation AssignVariation(string userAgent)
 		{
-			var experiments = _abTestingService.GetExperiments().Where(x => x.Enabled);
+			var experiments = _abTestingService.GetExperiments();
 			var selectedExperiment = RandomlySelectOption(experiments);
 			return RandomlySelectOption(FilterVariations(selectedExperiment.Variations, userAgent));
 		}
