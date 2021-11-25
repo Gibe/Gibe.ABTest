@@ -13,14 +13,181 @@ namespace Gibe.AbTest.Tests
 			return new AbTestingService(repository);
 		}
 
+
+		[Test]
+		public void GetExperiments_Returns_Experiments()
+		{
+			var experiments = Service(AbTestRepositoryEnabledExperimentsAndVariations()).GetExperiments();
+
+			AssertExperiment(experiments.First(), TestExperiment());
+		}
+
 		[Test]
 		public void GetExperiments_Returns_Empty_Experiment_When_No_Experiments()
 		{
-			var fakeAbTestingService = new FakeAbTestRepository(new List<ExperimentDto>(), new List<VariationDto>());
+			var experiments = Service(AbTestRepositoryNoExperiments()).GetExperiments();
 
-			var experiments = Service(fakeAbTestingService).GetExperiments();
+			AssertExperiment(experiments.First(), EmptyExperiment());
+		}
 
-			var expected = new Experiment(new ExperimentDto
+		[Test]
+		public void GetExperiments_Returns_Empty_Experiment_When_No_Enabled_Experiments()
+		{
+			var experiments = Service(AbTestRepositoryNoEnabledExperiments()).GetExperiments();
+
+			AssertExperiment(experiments.First(), EmptyExperiment());
+		}
+
+		[Test]
+		public void GetExperiments_Returns_Empty_Experiment_When_No_Variations()
+		{
+			var experiments = Service(AbTestRepositoryNoVariations()).GetExperiments();
+
+			AssertExperiment(experiments.First(), EmptyExperiment());
+		}
+
+		[Test]
+		public void GetExperiments_Returns_Empty_Experiment_When_No_Enabled_Variations()
+		{
+			var experiments = Service(AbTestRepositoryNoEnabledVariations()).GetExperiments();
+
+			AssertExperiment(experiments.First(), EmptyExperiment());
+		}
+
+		[Test]
+		public void GetVariation_Returns_Variations()
+		{
+			var variation = Service(AbTestRepositoryEnabledExperimentsAndVariations()).GetVariation("exp1", 1);
+
+			AssertVariation(variation, TestVariation());
+		}
+
+		[Test]
+		public void GetVariation_Returns_Empty_Variation_When_No_Experiments()
+		{
+			var variation = Service(AbTestRepositoryNoExperiments()).GetVariation("exp1", 1);
+
+			AssertVariation(variation, EmptyVariation());
+		}
+
+		[Test]
+		public void GetVariation_Returns_Empty_Variation_When_No_Enabled_Experiments()
+		{
+			var variation = Service(AbTestRepositoryNoEnabledExperiments()).GetVariation("exp1", 1);
+
+			AssertVariation(variation, EmptyVariation());
+		}
+
+		[Test]
+		public void GetVariation_Returns_Empty_Variation_When_No_Variations()
+		{
+			var variation = Service(AbTestRepositoryNoVariations()).GetVariation("exp1", 1);
+
+			AssertVariation(variation, EmptyVariation());
+		}
+
+		[Test]
+		public void GetVariation_Returns_Empty_Variation_When_No_Enabled_Variations()
+		{
+			var variation = Service(AbTestRepositoryNoEnabledVariations()).GetVariation("exp1", 1);
+
+			AssertVariation(variation, EmptyVariation());
+		}
+
+		[Test]
+		public void GetVariation_Returns_Empty_Variation_When_Given_Variation_Is_Not_Enabled_When_There_Is_another_Variation_Which_Is_Enabled()
+		{
+			var variation = Service(AbTestRepositoryOneEnabledAndOneDisabledVariations()).GetVariation("exp1", 1);
+
+			AssertVariation(variation, EmptyVariation());
+		}
+
+		[Test]
+		public void GetVariations_Returns_Variations()
+		{
+			var variations = Service(AbTestRepositoryEnabledExperimentsAndVariations()).GetVariations("exp1");
+
+			AssertVariation(variations.First(), TestVariation());
+			Assert.That(variations.Count(), Is.EqualTo(1));
+		}
+
+		[Test]
+		public void GetVariations_Returns_Empty_Variation_When_No_Experiements()
+		{
+			var variations = Service(AbTestRepositoryNoExperiments()).GetVariations("exp1");
+
+			AssertVariation(variations.First(), EmptyVariation());
+			Assert.That(variations.Count(), Is.EqualTo(1));
+		}
+
+		[Test]
+		public void GetVariations_Returns_Empty_Variation_When_No_Enabled_Experiements()
+		{
+			var variations = Service(AbTestRepositoryNoEnabledExperiments()).GetVariations("exp1");
+
+			AssertVariation(variations.First(), EmptyVariation());
+			Assert.That(variations.Count(), Is.EqualTo(1));
+		}
+
+		[Test]
+		public void GetVariations_Returns_Empty_Variation_When_No_Variations()
+		{
+			var variations = Service(AbTestRepositoryNoVariations()).GetVariations("exp1");
+
+			AssertVariation(variations.First(), EmptyVariation());
+			Assert.That(variations.Count(), Is.EqualTo(1));
+		}
+
+		[Test]
+		public void GetVariations_Returns_Empty_Variation_When_No_Enabled_Variations()
+		{
+			var variations = Service(AbTestRepositoryNoEnabledVariations()).GetVariations("exp1");
+
+			AssertVariation(variations.First(), EmptyVariation());
+			Assert.That(variations.Count(), Is.EqualTo(1));
+		}
+
+		private Experiment TestExperiment()
+		{
+			return new Experiment(TestExperimentDto(), new[] { TestVariation() });
+		}
+
+		private ExperimentDto TestExperimentDto()
+		{
+			return new ExperimentDto
+			{
+				Id = "exp1",
+				Key = "exp1",
+				Description = "test experiment",
+				StartDate = new System.DateTime(2019, 01, 01),
+				EndDate = null,
+				Weight = 1,
+				Enabled = true
+			};
+		}
+
+		private Variation TestVariation()
+		{
+			return new Variation(TestVariationDto());
+		}
+
+		private VariationDto TestVariationDto()
+		{
+			return new VariationDto
+			{
+				Id = 0,
+				ExperimentId = "exp1",
+				VariationNumber = 1,
+				Weight = 1,
+				Enabled = true,
+				Definition = "",
+				DesktopOnly = false
+			};
+		}
+
+		private Experiment EmptyExperiment()
+		{
+			return new Experiment(new ExperimentDto
 			{
 				Id = "",
 				Key = "",
@@ -29,36 +196,26 @@ namespace Gibe.AbTest.Tests
 				EndDate = null,
 				Weight = 1,
 				Enabled = true
-			}, new[] { new Variation(0, 1, 1, true, "", "", false) });
-
-			AssertExperiment(experiments.First(), expected);
+			}, new[] { EmptyVariation() });
 		}
 
-		[Test]
-		public void GetVariation_Returns_Empty_Variation_When_No_Experiments()
+		private Variation EmptyVariation()
 		{
-			var fakeAbTestingService = new FakeAbTestRepository(new List<ExperimentDto>(), new List<VariationDto>());
-
-			var variation = Service(fakeAbTestingService).GetVariation("exp1", 1);
-
-			var expected = new Variation(0, 1, 1, true, "", "", false);
-
-
-			AssertVariation(variation, expected);
+			return new Variation(0, 1, 1, true, "", "", false);
 		}
 
-		[Test]
-		public void GetVariations_Returns_Empty_Variation_When_No_Experiments()
-		{
-			var fakeAbTestingService = new FakeAbTestRepository(new List<ExperimentDto>(), new List<VariationDto>());
+		private FakeAbTestRepository AbTestRepositoryEnabledExperimentsAndVariations() => new FakeAbTestRepository(new List<ExperimentDto> { TestExperimentDto() }, new List<VariationDto> { TestVariationDto() });
 
-			var variations = Service(fakeAbTestingService).GetVariations("exp1");
+		private FakeAbTestRepository AbTestRepositoryNoExperiments() => new FakeAbTestRepository(new List<ExperimentDto>(), new List<VariationDto> { new VariationDto { ExperimentId = "exp1", Enabled = true } });
 
-			var expected = new Variation(0, 1, 1, true, "", "", false);
+		private FakeAbTestRepository AbTestRepositoryNoEnabledExperiments() => new FakeAbTestRepository(new List<ExperimentDto> { new ExperimentDto { Enabled = false } }, new List<VariationDto> { new VariationDto { ExperimentId = "exp1", Enabled = true } });
 
-			AssertVariation(variations.First(), expected);
-			Assert.That(variations.Count(), Is.EqualTo(1));
-		}
+		private FakeAbTestRepository AbTestRepositoryNoVariations() => new FakeAbTestRepository(new List<ExperimentDto> { new ExperimentDto { Enabled = true } }, new List<VariationDto>());
+
+		private FakeAbTestRepository AbTestRepositoryNoEnabledVariations() => new FakeAbTestRepository(new List<ExperimentDto> { new ExperimentDto { Enabled = true } }, new List<VariationDto> { new VariationDto { ExperimentId = "exp1", Enabled = false } });
+
+		private FakeAbTestRepository AbTestRepositoryOneEnabledAndOneDisabledVariations() => new FakeAbTestRepository(new List<ExperimentDto> { new ExperimentDto { Enabled = true } }, new List<VariationDto> { new VariationDto { ExperimentId = "exp1", Enabled = false }, new VariationDto { ExperimentId = "exp2", Enabled = true } });
+
 
 		private void AssertExperiment(Experiment actual, Experiment expected)
 		{
@@ -88,6 +245,5 @@ namespace Gibe.AbTest.Tests
 			Assert.That(actual.ExperimentId, Is.EqualTo(expected.ExperimentId));
 			Assert.That(actual.DesktopOnly, Is.EqualTo(expected.DesktopOnly));
 		}
-
 	}
 }

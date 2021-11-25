@@ -1,5 +1,4 @@
-﻿using Gibe.AbTest.Dto;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Gibe.AbTest
@@ -16,7 +15,9 @@ namespace Gibe.AbTest
 		public IEnumerable<Experiment> GetExperiments()
 		{
 			var experiments = _abTestRepository.GetExperiments()
-				.Select(x => new Experiment(x, GetVariations(x.Id).ToArray()));
+				.Where(e => e.Enabled)
+				.Select(e => new Experiment(e, GetAvailableVariations(e.Id).ToArray()))
+				.Where(e => e.Variations.Any());
 
 			if (experiments.Any())
 			{
@@ -28,11 +29,12 @@ namespace Gibe.AbTest
 
 		public IEnumerable<Variation> GetVariations(string experimentId)
 		{
-			var variations = _abTestRepository.GetVariations(experimentId);
+			var experiment = GetExperiments()
+				.FirstOrDefault(v => v.Id == experimentId);
 
-			if (variations.Any())
+			if (experiment != null && experiment.Variations.Any())
 			{
-				return variations.Select(v => new Variation(v));
+				return experiment.Variations;
 			}
 
 			return new[] { EmptyVariation() };
@@ -40,15 +42,28 @@ namespace Gibe.AbTest
 
 		public Variation GetVariation(string experimentId, int variationNumber)
 		{
-			var variation = _abTestRepository.GetVariations(experimentId)
-				.FirstOrDefault(v => v.VariationNumber == variationNumber);
+			var experiment = GetExperiments()
+				.FirstOrDefault(v => v.Id == experimentId);
 
-			if (variation != null)
+			if (experiment != null && experiment.Variations.Any(v => v.VariationNumber == variationNumber))
 			{
-				return new Variation(variation);
+				return experiment.Variations.First(v => v.VariationNumber == variationNumber);
 			}
 
 			return EmptyVariation();
+		}
+
+		private IEnumerable<Variation> GetAvailableVariations(string experimentId)
+		{
+			var variations = _abTestRepository.GetVariations(experimentId)
+			.Where(v => v.Enabled);
+
+			if (variations.Any())
+			{
+				return variations.Select(v => new Variation(v));
+			}
+
+			return Enumerable.Empty<Variation>();
 		}
 
 		private Experiment EmptyExperiment()

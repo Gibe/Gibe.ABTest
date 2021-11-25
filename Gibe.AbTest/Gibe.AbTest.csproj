@@ -31,24 +31,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Gibe.Caching, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Gibe.Caching.1.0.159\lib\Gibe.Caching.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Gibe.Caching.1.0.373\lib\Gibe.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Gibe.NPoco, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Gibe.NPoco.1.0.159\lib\Gibe.NPoco.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Gibe.NPoco.3.1.1\lib\net45\Gibe.NPoco.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NPoco, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPoco.2.5.77\lib\net40\NPoco.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPoco, Version=3.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPoco.3.9.3\lib\net45\NPoco.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
