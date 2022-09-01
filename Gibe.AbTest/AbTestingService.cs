@@ -17,7 +17,8 @@ namespace Gibe.AbTest
 			var experiments = _abTestRepository.GetExperiments()
 				.Where(e => e.Enabled)
 				.Select(e => new Experiment(e, GetAvailableVariations(e.Id).ToArray()))
-				.Where(e => e.Variations.Any());
+				.Where(e => e.Variations.Any())
+				.ToArray();
 
 			if (experiments.Any())
 			{
@@ -56,14 +57,11 @@ namespace Gibe.AbTest
 		private IEnumerable<Variation> GetAvailableVariations(string experimentId)
 		{
 			var variations = _abTestRepository.GetVariations(experimentId)
-			.Where(v => v.Enabled);
+				.Where(v => v.Enabled)
+				.Select(v => new Variation(v))
+				.ToArray();
 
-			if (variations.Any())
-			{
-				return variations.Select(v => new Variation(v));
-			}
-
-			return Enumerable.Empty<Variation>();
+			return variations.Any() ? variations : Enumerable.Empty<Variation>();
 		}
 
 		private Experiment EmptyExperiment()
