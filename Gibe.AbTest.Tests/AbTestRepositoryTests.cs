@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Gibe.NPoco;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Gibe.AbTest.Tests
 {
@@ -14,8 +8,15 @@ namespace Gibe.AbTest.Tests
 		[Test]
 		public void Test()
 		{
-			var repo = new AbTestRepository(new DefaultDatabaseProvider("GibeCommerce"));
-			var experiments = repo.GetExperiments().ToArray();
+#if NET45
+		var repo = new AbTestRepository(new DefaultDatabaseProvider("GibeCommerce"));
+		var experiments = repo.GetExperiments().ToArray();
+#endif
+
+#if NETCORE
+		var repo = new AbTestRepository(new DefaultDatabaseProvider("GibeCommerce", DatabaseType.SqlServer2012));
+		var experiments = repo.GetExperiments().ToArray();
+#endif
 		}
 	}
 }

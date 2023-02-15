@@ -13,7 +13,6 @@ namespace Gibe.AbTest.Tests
 			return new AbTestingService(repository);
 		}
 
-
 		[Test]
 		public void GetExperiments_Returns_Experiments()
 		{

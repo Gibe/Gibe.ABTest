@@ -1,22 +1,17 @@
-﻿using System;
+﻿using Gibe.AbTest.Attributes;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using Gibe.AbTest.Attributes;
-using Gibe.Caching.Interfaces;
 
 namespace Gibe.AbTest
 {
 	public class CachingAbTestingService : IAbTestingService
 	{
 		private readonly IAbTestingService _abTestingService;
-		private readonly ICache _cache;
 
-		private const string CacheKey = "GibeAbCache";
-
-		public CachingAbTestingService([NotCached]IAbTestingService abTestingService, ICache cache)
+		public CachingAbTestingService([NotCached] IAbTestingService abTestingService)
 		{
 			_abTestingService = abTestingService;
-			_cache = cache;
 		}
 
 		public Variation GetVariation(string experimentId, int variationNumber)
@@ -29,15 +24,10 @@ namespace Gibe.AbTest
 			return GetExperiments().First(x => x.Id == experimentId).Variations;
 		}
 
+		[ResponseCache(Duration = 60)]
 		public IEnumerable<Experiment> GetExperiments()
 		{
-			if (_cache.Exists(CacheKey))
-			{
-				return _cache.Get<Experiment[]>(CacheKey);
-			}
-			var experiments = _abTestingService.GetExperiments().ToArray();
-			_cache.Add(CacheKey, experiments, TimeSpan.FromMinutes(1));
-			return experiments;
+			return _abTestingService.GetExperiments().ToArray();
 		}
 	}
 }
