@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Gibe.AbTest.Dto;
+﻿using Gibe.AbTest.Dto;
 using Gibe.NPoco;
+using System.Collections.Generic;
 
 namespace Gibe.AbTest
 {
