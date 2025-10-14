@@ -1,0 +1,3 @@
+[submodule "public-pull-request-template"]
+	path = public-pull-request-template
+	url = git@github.com:Gibe/public-pull-request-template.git
