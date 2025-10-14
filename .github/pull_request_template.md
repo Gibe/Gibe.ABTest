@@ -14,4 +14,3 @@ Please confirm each item before assigning people to this PR.
 
 - [ ] I have checked for any issues with whitespace and code formatting.
 - [ ] I have selected an appropriate base branch for this PR to be set against for comparison purposes. I.e. I have selected the branch on which this work is based.
-- [ ] If appropriate, I have updated the gherkins on this branch 
