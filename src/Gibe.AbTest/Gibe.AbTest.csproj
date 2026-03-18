@@ -1,30 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net472;net6.0;net7.0;net8.0</TargetFrameworks>
+		<TargetFrameworks>net10.0</TargetFrameworks>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<PackageId>Gibe.ABTest</PackageId>
-		<PackageVersion>2.0.0</PackageVersion>
+		<PackageVersion>3.0.0</PackageVersion>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageTags>Gibe ABTest</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="GibeCommerce.Repositories.NPoco" Version="17.0.0.11045-v17-deve" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="NPoco" Version="3.9.4" />
-		<PackageReference Include="System.Runtime.Caching" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.9" />
-		<PackageReference Include="Ninject" Version="3.3.4" />
+		<PackageReference Include="GibeCommerce.Repositories.NPoco" Version="18.0.0.11743" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 	</ItemGroup>
-
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net472'">
-		<DefineConstants>NET472;NETFULL</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net7.0'">
-		<DefineConstants>NETCORE</DefineConstants>
-	</PropertyGroup>
 </Project>
