@@ -6,7 +6,7 @@
 
 	<PropertyGroup>
 		<PackageId>Gibe.ABTest</PackageId>
-		<PackageVersion>$(PackageVersion)</PackageVersion>
+		<PackageVersion>$(PackageVersion.Split('-')[0])</PackageVersion>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageTags>Gibe ABTest</PackageTags>
 	</PropertyGroup>
