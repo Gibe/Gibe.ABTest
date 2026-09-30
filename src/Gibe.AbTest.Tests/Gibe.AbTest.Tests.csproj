@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GibeCommerce.Repositories.NPoco" Version="18.0.0.11743" />
+    <PackageReference Include="GibeCommerce.Repositories.NPoco" Version="18.0.0.12398" />
     <PackageReference Include="NUnit" Version="4.5.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="6.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />

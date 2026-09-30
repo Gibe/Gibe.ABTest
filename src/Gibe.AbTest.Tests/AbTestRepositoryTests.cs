@@ -15,16 +15,16 @@ namespace Gibe.AbTest.Tests
 			var configuration = new ConfigurationBuilder()
 				.AddJsonFile("appsettings.test.json")
 				.Build();
-			var repo = new AbTestRepository(new FakeGibeCommerceDatabaseProvider(configuration.GetConnectionString("GibeCommerce"), DatabaseType.SqlServer2012, configuration));
+			var repo = new AbTestRepository(new TestGibeCommerceDatabaseProvider(configuration.GetConnectionString("GibeCommerce"), DatabaseType.SqlServer2012, configuration));
 			var experiments = repo.GetExperiments().ToArray();
 		}
 
-		public class FakeGibeCommerceDatabaseProvider : GibeCommerceDatabaseProvider
+		public class TestGibeCommerceDatabaseProvider : GibeCommerceDatabaseProvider
 		{
 			private readonly string _connectionString;
 			private readonly DatabaseType _databaseType;
 
-			public FakeGibeCommerceDatabaseProvider(string connectionString, DatabaseType databaseType, IConfiguration configuration) : base(configuration, [])
+			public TestGibeCommerceDatabaseProvider(string connectionString, DatabaseType databaseType, IConfiguration configuration) : base(configuration, [])
 			{
 				_connectionString = connectionString;
 				_databaseType = databaseType;

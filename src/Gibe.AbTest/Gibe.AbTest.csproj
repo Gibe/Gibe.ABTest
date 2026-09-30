@@ -6,13 +6,13 @@
 
 	<PropertyGroup>
 		<PackageId>Gibe.ABTest</PackageId>
-		<PackageVersion>3.0.0</PackageVersion>
+		<PackageVersion>$(PackageVersion)</PackageVersion>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageTags>Gibe ABTest</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="GibeCommerce.Repositories.NPoco" Version="18.0.0.11743" />
+		<PackageReference Include="GibeCommerce.Repositories.NPoco" Version="18.0.0.12398" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 	</ItemGroup>
 </Project>
