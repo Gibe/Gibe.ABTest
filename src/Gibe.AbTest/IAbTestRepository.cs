@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Gibe.AbTest.Dto;
 
 namespace Gibe.AbTest
@@ -12,8 +10,6 @@ namespace Gibe.AbTest
 		IEnumerable<ExperimentDto> GetExperiments();
 		VariationDto GetVariation(int id);
 		IEnumerable<VariationDto> GetVariations(string experimentId);
-
-
 	}
 
 	public class FakeAbTestRepository : IAbTestRepository

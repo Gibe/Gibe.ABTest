@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Gibe.AbTest.Dto;
+﻿using Gibe.AbTest.Dto;
 using Newtonsoft.Json;
 
 namespace Gibe.AbTest
@@ -30,7 +25,7 @@ namespace Gibe.AbTest
 			Definition = definition;
 			DesktopOnly = desktopOnly;
 		}
-		
+
 		public T GetDefinition<T>()
 		{
 			return JsonConvert.DeserializeObject<T>(Definition);

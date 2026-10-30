@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gibe.AbTest
+﻿namespace Gibe.AbTest
 {
 	public interface IAbTest
 	{
@@ -16,7 +10,7 @@ namespace Gibe.AbTest
 	{
 		public Variation AssignVariation(string userAgent)
 		{
-			return new Variation(1, 0, 1,true,"{Test:'test'}", "ABC1", false);
+			return new Variation(1, 0, 1, true, "{Test:'test'}", "ABC1", false);
 		}
 
 		public Variation GetAssignedVariation(string experimentId, int variationNumber)

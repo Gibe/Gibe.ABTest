@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 
 namespace Gibe.AbTest.Tests
@@ -15,7 +14,7 @@ namespace Gibe.AbTest.Tests
 		{
 			var fakeAbTestingService = new FakeAbTestingService();
 
-			var abTest = new AbTest(fakeAbTestingService, new FakeRandomNumber(new [] { 0, 0 }));
+			var abTest = new AbTest(fakeAbTestingService, new FakeRandomNumber(new[] { 0, 0 }));
 
 			var variation = abTest.AssignVariation(MobileUserAgent);
 
@@ -38,11 +37,11 @@ namespace Gibe.AbTest.Tests
 		public void AssignVariation_does_not_assign_mobile_user_to_desktop_variant()
 		{
 			var fakeAbTestingService = new FakeAbTestingService();
-			
+
 			var abTest = new AbTest(fakeAbTestingService, new FakeRandomNumber(new[] { 1, 1 }));
 
 			var variation = abTest.AssignVariation(MobileUserAgent);
-			
+
 			Assert.IsFalse(variation.DesktopOnly);
 		}
 
@@ -50,11 +49,11 @@ namespace Gibe.AbTest.Tests
 		public void AssignVariation_assigns_desktop_user_to_desktop_variant()
 		{
 			var fakeAbTestingService = new FakeAbTestingService();
-			
+
 			var abTest = new AbTest(fakeAbTestingService, new FakeRandomNumber(new[] { 1, 1 }));
 
 			var variation = abTest.AssignVariation(DesktopUserAgent);
-			
+
 			Assert.IsTrue(variation.DesktopOnly);
 		}
 
@@ -66,7 +65,7 @@ namespace Gibe.AbTest.Tests
 
 			var fakeAbTestingService = new FakeAbTestingService();
 
-			var abTest = new AbTest(fakeAbTestingService, new FakeRandomNumber(new int[] {}));
+			var abTest = new AbTest(fakeAbTestingService, new FakeRandomNumber(new int[] { }));
 
 			var variation = abTest.GetAssignedVariation(experimentId, variationNo);
 
