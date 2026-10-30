@@ -1,41 +1,25 @@
-﻿using System;
-using Gibe.AbTest.Attributes;
-using Gibe.AbTest.Caching;
-using Gibe.AbTest.Dates;
+﻿using Gibe.AbTest.Dates;
+using GibeCommerce.Cache;
 using Microsoft.Extensions.DependencyInjection;
-using Ninject;
+using System.Linq;
 
 namespace Gibe.AbTest
 {
 	public static class Services
 	{
-		public static void AddGibeAbTestBindings(this IKernel kernel)
+		public static void AddGibeAbTest(this IServiceCollection services)
 		{
-			AddGibeAbTestServices(kernel: kernel);
-		}
+			services.AddSingleton<IAbTest, AbTest>();
+			services.AddSingleton<IAbTestRepository, AbTestRepository>();
+			services.AddSingleton<IAbTestingService, AbTestingService>();
+			services.Decorate<IAbTestingService, CachingAbTestingService>();
+			services.AddSingleton<IRandomNumber, RandomNumber>();
+			services.AddSingleton<ITimeProvider, DateTimeUtcTimeProvider>();
 
-		public static void AddGibeAbTestServices(this IServiceCollection serviceCollection)
-		{
-			AddGibeAbTestServices(serviceCollection: serviceCollection, kernel: null);
-		}
-
-		private static void AddGibeAbTestServices(IServiceCollection serviceCollection = null, IKernel kernel = null)
-		{
-			AddTransient<IAbTest, AbTest>(serviceCollection, kernel);
-			AddTransient<IAbTestRepository, AbTestRepository>(serviceCollection, kernel);
-			AddTransient<IAbTestingService, CachingAbTestingService>(serviceCollection, kernel);
-			AddTransient<IRandomNumber, RandomNumber>(serviceCollection, kernel);
-			AddTransient<ITimeProvider, DateTimeUtcTimeProvider>(serviceCollection, kernel);
-			AddTransient<ICache, MemoryCacheWrapper>(serviceCollection, kernel);
-		}
-
-
-		private static void AddTransient<TInterface, TImplementation>(IServiceCollection serviceCollection, IKernel kernel)
-			where TImplementation : TInterface
-		{
-			serviceCollection?.AddTransient(typeof(TInterface), typeof(TImplementation));
-
-			kernel?.Bind<TInterface>().To<TImplementation>();
+			if (services.Any(x => x.ServiceType == typeof(ICache)) != true)
+			{
+				services.AddSingleton<ICache, MemoryCacheWrapper>();
+			}
 		}
 	}
 }

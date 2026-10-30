@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using GibeCommerce.Repositories.NPoco;
+using Microsoft.Extensions.Configuration;
+using NPoco;
+using NUnit.Framework;
+using System.Linq;
 
 namespace Gibe.AbTest.Tests
 {
@@ -8,15 +12,28 @@ namespace Gibe.AbTest.Tests
 		[Test]
 		public void Test()
 		{
-#if NET45
-		var repo = new AbTestRepository(new DefaultDatabaseProvider("GibeCommerce"));
-		var experiments = repo.GetExperiments().ToArray();
-#endif
+			var configuration = new ConfigurationBuilder()
+				.AddJsonFile("appsettings.test.json")
+				.Build();
+			var repo = new AbTestRepository(new TestGibeCommerceDatabaseProvider(configuration.GetConnectionString("GibeCommerce"), DatabaseType.SqlServer2012, configuration));
+			var experiments = repo.GetExperiments().ToArray();
+		}
 
-#if NETCORE
-		var repo = new AbTestRepository(new DefaultDatabaseProvider("GibeCommerce", DatabaseType.SqlServer2012));
-		var experiments = repo.GetExperiments().ToArray();
-#endif
+		public class TestGibeCommerceDatabaseProvider : GibeCommerceDatabaseProvider
+		{
+			private readonly string _connectionString;
+			private readonly DatabaseType _databaseType;
+
+			public TestGibeCommerceDatabaseProvider(string connectionString, DatabaseType databaseType, IConfiguration configuration) : base(configuration, [])
+			{
+				_connectionString = connectionString;
+				_databaseType = databaseType;
+			}
+
+			public new IDatabase Database()
+			{
+				return new GibeCommerceDatabase(_connectionString);
+			}
 		}
 	}
 }

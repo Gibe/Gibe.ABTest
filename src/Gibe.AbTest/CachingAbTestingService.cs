@@ -1,5 +1,5 @@
 ﻿using Gibe.AbTest.Attributes;
-using Gibe.AbTest.Caching;
+using GibeCommerce.Cache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
