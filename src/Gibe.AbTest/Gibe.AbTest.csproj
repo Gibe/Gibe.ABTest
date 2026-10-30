@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net10.0</TargetFrameworks>
@@ -12,7 +12,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="GibeCommerce.Repositories.NPoco" Version="18.0.0.12398" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageReference Include="GibeCommerce.Repositories.NPoco" />
+		<PackageReference Include="Newtonsoft.Json" />
 	</ItemGroup>
 </Project>
